@@ -4,7 +4,7 @@ import java.util.List;
 
 import MODEL.Pedido;
 
-public interface PedidoDao {
+public interface PedidoDao extends templateDao{
 	
 	public void inserir(Pedido p);
 

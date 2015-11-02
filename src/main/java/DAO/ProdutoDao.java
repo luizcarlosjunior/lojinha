@@ -4,7 +4,7 @@ import java.util.List;
 
 import MODEL.Produto;
 
-public interface ProdutoDao {
+public interface ProdutoDao extends templateDao{
 	
 	public void inserir(Produto p);
 
