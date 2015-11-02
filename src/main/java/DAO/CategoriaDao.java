@@ -1,18 +1,20 @@
 package DAO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import MODEL.Categoria;
 
-public interface CategoriaDao {
+public interface CategoriaDao extends templateDao{
 	
-	public void inserir(Categoria c);
+	public void inserir(Categoria c) throws SQLException;
 
-	public void atualizar(Categoria c);
+	public void atualizar(Categoria c) throws SQLException;
 
-	public void excluir(Categoria c);
+	public void excluir(Categoria c) throws SQLException;
 
-	public Categoria buscar(int id);
+	public Categoria buscar(int id) throws SQLException;
 
-	public List<Categoria> listar();
+	public List<Categoria> listar() throws SQLException;
+	
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import MODEL.Usuario;
 
-public interface UsuarioDao {
+public interface UsuarioDao extends templateDao{
 	
 	public void inserir(Usuario u);
 

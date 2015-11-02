@@ -4,7 +4,7 @@ import java.util.List;
 
 import MODEL.Cliente;
 
-public interface ClienteDao {
+public interface ClienteDao extends templateDao{
 	
 	public void inserir(Cliente c);
 

@@ -7,9 +7,18 @@
 
 package MODEL;
 
+import java.sql.PreparedStatement;
+
 public class Categoria {
 	int id;
 	String nome;
+
+	public Categoria(){}
+	
+	public Categoria(int id, String nome){
+		this.id = id;
+		this.nome = nome;
+	}
 	
 	public int getId() {
 		return id;
@@ -23,4 +32,5 @@ public class Categoria {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 }

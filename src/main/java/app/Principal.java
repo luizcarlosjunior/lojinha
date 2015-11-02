@@ -20,7 +20,11 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import java.awt.Insets;
+
 import javax.swing.JTabbedPane;
+
+import DAO.Conexao;
+
 import java.awt.BorderLayout;
 
 public class Principal extends JFrame {
@@ -33,7 +37,6 @@ public class Principal extends JFrame {
 	//variaveis privadas
 	static JPanel contentPane;
 	static JTabbedPane tabbedPane;
-	
 
 	/**
 	 * Launch the application.
@@ -115,7 +118,7 @@ public class Principal extends JFrame {
 	
 	// chamada de telas
 	private void TelaCategoriasLista() {
-		final Categoria Categoria = new Categoria();
+		final visaoCategoria Categoria = new visaoCategoria();
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPane.remove(Categoria);

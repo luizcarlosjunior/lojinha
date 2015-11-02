@@ -2,7 +2,7 @@ package app;
 
 import java.awt.BorderLayout;
 
-public class Categoria extends MolduraAbstrata {
+public class visaoCategoria extends MolduraAbstrata {
 
 	/**
 	 * 
@@ -10,7 +10,7 @@ public class Categoria extends MolduraAbstrata {
 	private static final long serialVersionUID = 1L;
 
 
-	public Categoria() {
+	public visaoCategoria() {
 		super();
 	}
 
