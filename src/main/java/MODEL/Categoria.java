@@ -7,8 +7,6 @@
 
 package MODEL;
 
-import java.sql.PreparedStatement;
-
 public class Categoria {
 	int id;
 	String nome;

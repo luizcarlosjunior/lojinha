@@ -6,6 +6,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
+	
+	// Singleton
+	private static Conexao conexao;
+	
+	public static Conexao getInstance() {
+        return (conexao == null) ? (conexao = new Conexao()) : conexao;
+    }
+
+	
 	private String link;
 	private String user;
 	private String pass;
@@ -13,9 +22,9 @@ public class Conexao {
 	private String host;
 	private String port;	
 
-	static Connection conexao;
+	static Connection conn;
 	static Statement stm;
-
+	
 	Conexao() {
 		initialize();
 	}
@@ -33,7 +42,7 @@ public class Conexao {
 	public Connection abrirConexao() throws SQLException, ClassNotFoundException {
 		try {
 				Class.forName("org.postgresql.Driver");
-				conexao = DriverManager.getConnection(link + host + ":" + port + "/" + name, user, pass);
+				conn = DriverManager.getConnection(link + host + ":" + port + "/" + name, user, pass);
 				System.out.println("conexão com o banco foi aberta!");
 				
 	        } catch (Exception e) {
@@ -41,11 +50,11 @@ public class Conexao {
 	            System.err.println(e.getClass().getName()+": "+e.getMessage());
 	            System.exit(0);
 	       }
-		return conexao;
+		return conn;
 	}
 
 	public void fecharConexao() throws SQLException {
-		conexao.close();
+		conn.close();
 		System.out.println("conexão com o banco foi fechada!");
 	}
 

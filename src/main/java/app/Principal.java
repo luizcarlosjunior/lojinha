@@ -37,7 +37,7 @@ public class Principal extends JFrame {
 	//variaveis privadas
 	static JPanel contentPane;
 	static JTabbedPane tabbedPane;
-
+	
 	/**
 	 * Launch the application.
 	 */

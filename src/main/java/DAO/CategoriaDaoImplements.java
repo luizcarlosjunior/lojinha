@@ -6,13 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import MODEL.Categoria;
 
 public class CategoriaDaoImplements implements CategoriaDao {
 
-	static Conexao conexao = new Conexao();
+	Conexao conexao = new Conexao();
 	Connection conn = null;
 	
 	
@@ -24,6 +23,7 @@ public class CategoriaDaoImplements implements CategoriaDao {
 			e.printStackTrace();
 		}
 	}
+	
 	public void fecharConexao() throws SQLException {
 		conexao.fecharConexao();
 	}
@@ -39,36 +39,45 @@ public class CategoriaDaoImplements implements CategoriaDao {
 	}
 	
 	public void atualizar(Categoria c) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-	public void excluir(Categoria c) throws SQLException {
-		// TODO Auto-generated method stub
 		abrirConexao();
-		PreparedStatement sql = ((Connection) conexao).prepareStatement("DELETE FROM CATEGORIAS WHERE ID = ?");
-		sql.setInt(1, c.getId());
-		sql.executeUpdate();
-		sql.close();
+		PreparedStatement ps = conn.prepareStatement("UPDATE CATEGORIAS SET NOME = ? WHERE ID = ?");
+		ps.setString(1, c.getNome());
+		ps.setInt(2, c.getId());
+		ps.executeUpdate();
+		ps.close();
+		fecharConexao();
+	}
+	
+	public void excluir(Categoria c) throws SQLException {
+		abrirConexao();
+		PreparedStatement ps = conn.prepareStatement("DELETE FROM CATEGORIAS WHERE ID = ?");
+		ps.setInt(1, c.getId());
+		ps.executeUpdate();
+		ps.close();
 		fecharConexao();
 		
 	}
+	
 	public Categoria buscar(int id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public List<Categoria> listar() throws SQLException {
-		// TODO Auto-generated method stub
+	
+	public ArrayList<Categoria> listar() throws SQLException {
 		ArrayList<Categoria> lista = new ArrayList<Categoria>();
-		
 		abrirConexao();
-		Statement st = ((Connection) conexao).createStatement();
-		ResultSet result = st.executeQuery("SELECT * FROM CLIENTE");
+		Statement st = conn.createStatement();
+		ResultSet result = st.executeQuery("SELECT * FROM CATEGORIAS ORDER BY NOME");
+		
 		while (result.next()) {
 			int id = result.getInt(1);
 			String nome = result.getString(2);
 			Categoria c = new Categoria(id, nome);
 			lista.add(c);
 		}
+		
 		fecharConexao();
+		
 		return lista;
 	}
 }
