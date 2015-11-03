@@ -287,14 +287,14 @@ public class MioloCliente extends JPanel {
 	}
 	
 	
-	protected void acao_criar(Cliente c) throws SQLException {
+	private void acao_criar(Cliente c) throws SQLException {
 		//enviar para o DAO
 		cliDAO.inserir(c);
 		//atualiza a lista
 		acao_listar();
 	}
 	
-	protected void acao_listar() throws SQLException {
+	private void acao_listar() throws SQLException {
 		modelo.setList(cliDAO.listar());
 	}
 	
