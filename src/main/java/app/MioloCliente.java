@@ -197,9 +197,10 @@ public class MioloCliente extends JPanel {
 				txtTelefone.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),2) ).trim() );
 				txtEndereco.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),3) ).trim() );
 				txtCidade.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),4) ).trim() );
-				cbEstados.setSelectedItem( String.valueOf(modelo.getValueAt(table.getSelectedRow(),5) ) );
+				cbEstados.setSelectedItem( String.valueOf(modelo.getValueAt(table.getSelectedRow(),5)).trim() );
 				txtEmail.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),6) ).trim() );
-				cbGeneros.setSelectedItem( String.valueOf(modelo.getValueAt(table.getSelectedRow(),7) ) );
+				cbGeneros.setSelectedItem( String.valueOf(modelo.getValueAt(table.getSelectedRow(),7)).trim() );
+				
 				
 			}
 		});
