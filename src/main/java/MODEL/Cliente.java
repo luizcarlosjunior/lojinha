@@ -17,6 +17,20 @@ public class Cliente {
 	String email;
 	String genero;
 	
+	
+	public Cliente(){}
+	
+	public Cliente(Integer id, String nome, String telefone, String endereco, String cidade, String estado, String email, String genero) {
+		this.id = id;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.endereco = endereco;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.email = email;
+		this.genero = genero;
+	}
+	
 	public int getId() {
 		return id;
 	}

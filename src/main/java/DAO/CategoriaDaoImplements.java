@@ -55,7 +55,6 @@ public class CategoriaDaoImplements implements CategoriaDao {
 		ps.executeUpdate();
 		ps.close();
 		fecharConexao();
-		
 	}
 	
 	public Categoria buscar(int id) throws SQLException {

@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.GridBagLayout;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -15,15 +13,7 @@ import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JLabel;
-
-import java.awt.GridBagConstraints;
-import java.awt.Font;
-import java.awt.Insets;
-
 import javax.swing.JTabbedPane;
-
-import DAO.Conexao;
 
 import java.awt.BorderLayout;
 
@@ -81,7 +71,7 @@ public class Principal extends JFrame {
 		mntmClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// chamar a lista de clientes
-				
+				TelaClientesLista();
 			}
 		});
 		mnarquivo.add(mntmClientes);
@@ -103,9 +93,6 @@ public class Principal extends JFrame {
 		});
 		mnarquivo.add(mntmSair);
 		
-		
-		
-		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -116,7 +103,7 @@ public class Principal extends JFrame {
 		
 	}
 	
-	// chamada de telas
+	// chamada de tela de categorias
 	private void TelaCategoriasLista() {
 		final visaoCategoria Categoria = new visaoCategoria();
 		ActionListener action = new ActionListener() {
@@ -126,6 +113,19 @@ public class Principal extends JFrame {
 		};
 		Categoria.setCloseAction(action);
 
-		tabbedPane.addTab("Categoria", Categoria);
+		tabbedPane.addTab("Categorias", Categoria);
+	}
+	
+	//chamada de tela de clientes
+	private void TelaClientesLista() {
+		final visaoCliente Cliente = new visaoCliente();
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.remove(Cliente);
+			}
+		};
+		Cliente.setCloseAction(action);
+
+		tabbedPane.addTab("Clientes", Cliente);
 	}
 }
