@@ -60,10 +60,10 @@ public class ClienteDaoImplements implements ClienteDao {
 		fecharConexao();
 	}
 	
-	public void excluir(Cliente c) throws SQLException {
+	public void excluir(int id) throws SQLException {
 		abrirConexao();
 		PreparedStatement ps = conn.prepareStatement("DELETE FROM CLIENTES WHERE ID = ?");
-		ps.setInt(1, c.getId());
+		ps.setInt(1, id);
 		ps.executeUpdate();
 		ps.close();
 		fecharConexao();

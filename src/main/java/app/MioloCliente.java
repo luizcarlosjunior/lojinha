@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
@@ -54,9 +55,9 @@ public class MioloCliente extends JPanel {
 	 */
 	public MioloCliente() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -72,6 +73,7 @@ public class MioloCliente extends JPanel {
 		txtNome = new JTextField();
 		txtNome.setColumns(10);
 		GridBagConstraints gbc_txtNome = new GridBagConstraints();
+		gbc_txtNome.gridwidth = 2;
 		gbc_txtNome.insets = new Insets(0, 0, 5, 5);
 		gbc_txtNome.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtNome.gridx = 1;
@@ -81,15 +83,16 @@ public class MioloCliente extends JPanel {
 		JLabel lblNewLabel_2 = new JLabel("EMAIL");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 2;
+		gbc_lblNewLabel_2.gridx = 3;
 		gbc_lblNewLabel_2.gridy = 2;
 		add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		txtEmail = new JTextField();
 		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
+		gbc_txtEmail.gridwidth = 2;
 		gbc_txtEmail.insets = new Insets(0, 0, 5, 0);
 		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtEmail.gridx = 3;
+		gbc_txtEmail.gridx = 4;
 		gbc_txtEmail.gridy = 2;
 		add(txtEmail, gbc_txtEmail);
 		txtEmail.setColumns(10);
@@ -103,6 +106,7 @@ public class MioloCliente extends JPanel {
 		
 		txtTelefone = new JTextField();
 		GridBagConstraints gbc_txtTelefone = new GridBagConstraints();
+		gbc_txtTelefone.gridwidth = 2;
 		gbc_txtTelefone.insets = new Insets(0, 0, 5, 5);
 		gbc_txtTelefone.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtTelefone.gridx = 1;
@@ -114,15 +118,16 @@ public class MioloCliente extends JPanel {
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_3.gridx = 2;
+		gbc_lblNewLabel_3.gridx = 3;
 		gbc_lblNewLabel_3.gridy = 3;
 		add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
 		txtEndereco = new JTextField();
 		GridBagConstraints gbc_txtEndereco = new GridBagConstraints();
+		gbc_txtEndereco.gridwidth = 2;
 		gbc_txtEndereco.insets = new Insets(0, 0, 5, 0);
 		gbc_txtEndereco.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtEndereco.gridx = 3;
+		gbc_txtEndereco.gridx = 4;
 		gbc_txtEndereco.gridy = 3;
 		add(txtEndereco, gbc_txtEndereco);
 		txtEndereco.setColumns(10);
@@ -137,6 +142,7 @@ public class MioloCliente extends JPanel {
 		
 		txtCidade = new JTextField();
 		GridBagConstraints gbc_txtCidade = new GridBagConstraints();
+		gbc_txtCidade.gridwidth = 2;
 		gbc_txtCidade.insets = new Insets(0, 0, 5, 5);
 		gbc_txtCidade.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtCidade.gridx = 1;
@@ -148,15 +154,16 @@ public class MioloCliente extends JPanel {
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
 		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_4.gridx = 2;
+		gbc_lblNewLabel_4.gridx = 3;
 		gbc_lblNewLabel_4.gridy = 4;
 		add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
 		final JComboBox cbEstados = new JComboBox(ENUM.EnumEstado.values());
 		GridBagConstraints gbc_cbEstados = new GridBagConstraints();
+		gbc_cbEstados.gridwidth = 2;
 		gbc_cbEstados.insets = new Insets(0, 0, 5, 0);
 		gbc_cbEstados.fill = GridBagConstraints.HORIZONTAL;
-		gbc_cbEstados.gridx = 3;
+		gbc_cbEstados.gridx = 4;
 		gbc_cbEstados.gridy = 4;
 		add(cbEstados, gbc_cbEstados);
 		
@@ -170,6 +177,7 @@ public class MioloCliente extends JPanel {
 		
 		final JComboBox cbGeneros = new JComboBox(ENUM.EnumGenero.values());
 		GridBagConstraints gbc_cbGeneros = new GridBagConstraints();
+		gbc_cbGeneros.gridwidth = 2;
 		gbc_cbGeneros.insets = new Insets(0, 0, 5, 5);
 		gbc_cbGeneros.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cbGeneros.gridx = 1;
@@ -181,7 +189,7 @@ public class MioloCliente extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 14;
-		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.gridwidth = 5;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;
@@ -216,22 +224,20 @@ public class MioloCliente extends JPanel {
 		JButton btnCriarNovo = new JButton("CRIAR NOVO REGISTRO");
 		btnCriarNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					
-					Integer id = 0;
-					String nome = txtNome.getText().trim();
-					String telefone = txtTelefone.getText().trim();
-					String endereco = txtEndereco.getText().trim();
-					String cidade = txtCidade.getText().trim();
-					String estado = cbEstados.getSelectedItem().toString();
-					String email = txtEmail.getText().trim();
-					String genero = cbGeneros.getSelectedItem().toString();
+				
+				Integer id = 0;
+				String nome = txtNome.getText().trim();
+				String telefone = txtTelefone.getText().trim();
+				String endereco = txtEndereco.getText().trim();
+				String cidade = txtCidade.getText().trim();
+				String estado = cbEstados.getSelectedItem().toString();
+				String email = txtEmail.getText().trim();
+				String genero = cbGeneros.getSelectedItem().toString();
 
-					Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
-					
+				Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
+
+				try {
 					acao_criar(c);
-					
-					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -247,22 +253,20 @@ public class MioloCliente extends JPanel {
 		JButton btnAtualizarRegistroSelecionado = new JButton("ATUALIZAR REGISTRO SELECIONADO");
 		btnAtualizarRegistroSelecionado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				Integer id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
+				String nome = txtNome.getText().trim();
+				String telefone = txtTelefone.getText().trim();
+				String endereco = txtEndereco.getText().trim();
+				String cidade = txtCidade.getText().trim();
+				String estado = cbEstados.getSelectedItem().toString();
+				String email = txtEmail.getText().trim();
+				String genero = cbGeneros.getSelectedItem().toString();
+				
+				Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
+				
 				try {
-					
-					
-					Integer id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
-					String nome = txtNome.getText().trim();
-					String telefone = txtTelefone.getText().trim();
-					String endereco = txtEndereco.getText().trim();
-					String cidade = txtCidade.getText().trim();
-					String estado = cbEstados.getSelectedItem().toString();
-					String email = txtEmail.getText().trim();
-					String genero = cbGeneros.getSelectedItem().toString();
-					
-					Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
-					
 					acao_atualizar(c);
-					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -271,10 +275,50 @@ public class MioloCliente extends JPanel {
 			}
 		});
 		GridBagConstraints gbc_btnAtualizarRegistroSelecionado = new GridBagConstraints();
-		gbc_btnAtualizarRegistroSelecionado.insets = new Insets(0, 0, 5, 0);
-		gbc_btnAtualizarRegistroSelecionado.gridx = 3;
+		gbc_btnAtualizarRegistroSelecionado.insets = new Insets(0, 0, 5, 5);
+		gbc_btnAtualizarRegistroSelecionado.gridx = 2;
 		gbc_btnAtualizarRegistroSelecionado.gridy = 20;
 		add(btnAtualizarRegistroSelecionado, gbc_btnAtualizarRegistroSelecionado);
+		
+		JButton btnApagarSelecionado = new JButton("APAGAR SELECIONADO");
+		btnApagarSelecionado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				//pergunta se quer realmente apagar
+				int confirmacao = JOptionPane.showConfirmDialog (null, "Quer realmente apagar o registro?","Confirmação", JOptionPane.YES_OPTION);
+				
+	            if(confirmacao == 0){
+	            	//busca o id
+	            	Integer id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
+	            	
+	            	// tenta apagar
+					try {
+						acao_apagar(id);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			
+	            }
+            
+			
+			
+			}
+			
+		});
+		GridBagConstraints gbc_btnApagarSelecionado = new GridBagConstraints();
+		gbc_btnApagarSelecionado.insets = new Insets(0, 0, 5, 5);
+		gbc_btnApagarSelecionado.gridx = 3;
+		gbc_btnApagarSelecionado.gridy = 20;
+		add(btnApagarSelecionado, gbc_btnApagarSelecionado);
+		
+		JButton btnNewButton = new JButton("CRIAR SENHA");
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton.gridx = 5;
+		gbc_btnNewButton.gridy = 20;
+		add(btnNewButton, gbc_btnNewButton);
 		
 		//atualiza a lista
 			try {
@@ -296,6 +340,13 @@ public class MioloCliente extends JPanel {
 	
 	private void acao_listar() throws SQLException {
 		modelo.setList(cliDAO.listar());
+	}
+	
+	private void acao_apagar(int id) throws SQLException {
+		//enviar para o DAO
+		cliDAO.excluir(id);
+		//atualiza a lista
+		acao_listar();
 	}
 	
 	private void acao_atualizar(Cliente c) throws SQLException {

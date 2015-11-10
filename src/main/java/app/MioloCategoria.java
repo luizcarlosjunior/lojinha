@@ -11,7 +11,9 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
@@ -46,9 +48,9 @@ public class MioloCategoria extends JPanel {
 	 */
 	public MioloCategoria() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -64,7 +66,7 @@ public class MioloCategoria extends JPanel {
 		txtNOME = new JTextField();
 		txtNOME.setColumns(10);
 		GridBagConstraints gbc_txtNOME = new GridBagConstraints();
-		gbc_txtNOME.gridwidth = 2;
+		gbc_txtNOME.gridwidth = 3;
 		gbc_txtNOME.insets = new Insets(0, 0, 5, 0);
 		gbc_txtNOME.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtNOME.gridx = 1;
@@ -74,7 +76,7 @@ public class MioloCategoria extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 13;
-		gbc_scrollPane.gridwidth = 2;
+		gbc_scrollPane.gridwidth = 3;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;
@@ -99,14 +101,21 @@ public class MioloCategoria extends JPanel {
 		JButton btnCriarNovo = new JButton("CRIAR NOVO REGISTRO");
 		btnCriarNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					
-					acao_criar(txtNOME.getText().trim());
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
+				String nome = txtNOME.getText().trim();
+				
+				if (nome.isEmpty()){
+					JOptionPane.showMessageDialog(null, "O nome não pode ficar em branco.");	
+				} else {
+					try {
+						acao_criar(nome);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					txtNOME.setText("");	
 				}
+				
 			}
 		});
 		GridBagConstraints gbc_btnCriarNovo = new GridBagConstraints();
@@ -120,20 +129,71 @@ public class MioloCategoria extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					
-					Integer id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
-					acao_atualizar(id, txtNOME.getText().trim());
+					int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
 					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
+					String nome = txtNOME.getText().trim();
+					
+					if (nome.isEmpty()){
+						JOptionPane.showMessageDialog(null, "O nome não pode ficar em branco.");	
+					} else {
+						int confirmacao = JOptionPane.showConfirmDialog (null, "Deseja realmente atualizar o registro?","Confirmação", JOptionPane.YES_OPTION);
+						
+			            if(confirmacao == 0){
+			            	try {
+								acao_atualizar(id, nome);
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+			            }
+					
+					}
+
+		        } catch (Exception e_atualiza) {
+		        	JOptionPane.showMessageDialog(null, "Você precisa selecionar um elemento.");
+		        }
 			}
+			
+			
 		});
 		GridBagConstraints gbc_btnAtualizarRegistroSelecionado = new GridBagConstraints();
+		gbc_btnAtualizarRegistroSelecionado.insets = new Insets(0, 0, 0, 5);
 		gbc_btnAtualizarRegistroSelecionado.gridx = 2;
 		gbc_btnAtualizarRegistroSelecionado.gridy = 17;
 		add(btnAtualizarRegistroSelecionado, gbc_btnAtualizarRegistroSelecionado);
+		
+		JButton btnNewButton = new JButton("APAGAR REGISTRO");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try 
+		        {
+					int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);  
+
+					//pergunta se quer realmente apagar
+					int confirmacao = JOptionPane.showConfirmDialog (null, "Quer realmente apagar o registro?","Confirmação", JOptionPane.YES_OPTION);
+					
+		            if(confirmacao == 0){
+		            	
+		            	// tenta apagar
+						try {
+							acao_apagar(id);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				
+		            }
+				
+					
+		        } catch (Exception e_apaga) {
+		        	JOptionPane.showMessageDialog(null, "Você precisa selecionar um elemento.");
+		        }	
+			}
+		});
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.gridx = 3;
+		gbc_btnNewButton.gridy = 17;
+		add(btnNewButton, gbc_btnNewButton);
 		
 		//atualiza a lista
 			try {
@@ -159,11 +219,16 @@ public class MioloCategoria extends JPanel {
 		modelo.setList(catDAO.listar());
 	}
 	
-	private void acao_atualizar(Integer id, String nome) throws SQLException {
+	private void acao_atualizar(int id, String nome) throws SQLException {
 		// criar modelo temoprario
 		Categoria c = new Categoria(id, nome);
 		//enviar para o DAO
 		catDAO.atualizar(c);
+		//atualiza a lista
+		acao_listar();
+	}
+	protected void acao_apagar(int id) throws SQLException {
+		catDAO.excluir(id);
 		//atualiza a lista
 		acao_listar();
 	}

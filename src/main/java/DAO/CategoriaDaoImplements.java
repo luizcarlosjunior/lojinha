@@ -48,10 +48,10 @@ public class CategoriaDaoImplements implements CategoriaDao {
 		fecharConexao();
 	}
 	
-	public void excluir(Categoria c) throws SQLException {
+	public void excluir(int id) throws SQLException {
 		abrirConexao();
 		PreparedStatement ps = conn.prepareStatement("DELETE FROM CATEGORIAS WHERE ID = ?");
-		ps.setInt(1, c.getId());
+		ps.setInt(1, id);
 		ps.executeUpdate();
 		ps.close();
 		fecharConexao();

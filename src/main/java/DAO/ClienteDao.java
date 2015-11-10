@@ -11,7 +11,7 @@ public interface ClienteDao extends templateDao{
 
 	public void atualizar(Cliente c) throws SQLException;
 
-	public void excluir(Cliente c) throws SQLException;
+	public void excluir(int id) throws SQLException;
 
 	public Cliente buscar(int id) throws SQLException;
 

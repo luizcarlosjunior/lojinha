@@ -52,8 +52,8 @@ public class ModeloCliente extends AbstractTableModel {
 		}
 	}
 
-	public void setList(ArrayList<Cliente> list){
-		lista = list;
+	public void setList(ArrayList<Cliente> lista){
+		this.lista = lista;
 		super.fireTableDataChanged();
 	}
 

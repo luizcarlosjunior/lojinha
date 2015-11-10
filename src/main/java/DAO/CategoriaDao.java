@@ -11,7 +11,7 @@ public interface CategoriaDao extends templateDao{
 
 	public void atualizar(Categoria c) throws SQLException;
 
-	public void excluir(Categoria c) throws SQLException;
+	public void excluir(int c) throws SQLException;
 
 	public Categoria buscar(int id) throws SQLException;
 
