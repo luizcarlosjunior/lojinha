@@ -17,11 +17,13 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
+import ATM.ComboBoxModelClientes;
 import ATM.ModeloCliente;
 import ATM.ModeloUsuario;
 import DAO.UsuarioDaoImplements;
@@ -52,11 +54,15 @@ public class MioloUsuario extends JPanel {
 	private ModeloUsuario modelo = new ModeloUsuario();
 	
 	JComboBox comboBox = new JComboBox();
-
+	
 	/**
 	 * Create the panel.
 	 */
-	public MioloUsuario() {	
+	public MioloUsuario() {
+		
+		ComboBoxModelClientes comboBoxModelClientes = new ComboBoxModelClientes();
+	    comboBox.setModel(comboBoxModelClientes);
+		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
