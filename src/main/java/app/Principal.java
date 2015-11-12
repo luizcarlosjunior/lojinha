@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -77,9 +76,22 @@ public class Principal extends JFrame {
 		mnarquivo.add(mntmClientes);
 		
 		JMenuItem mntmprodutos = new JMenuItem("Produtos");
+		mntmprodutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// chamar a lista de produtos
+				//TelaProdutosLista();
+			}
+		});
 		mnarquivo.add(mntmprodutos);
 		
 		JMenuItem mntmUsurios = new JMenuItem("Usuários");
+		mntmUsurios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// chamar a lista de usuarios
+				TelaUsuariosLista();
+				
+			}
+		});
 		mnarquivo.add(mntmUsurios);
 		
 		JMenuItem mntmPedidos = new JMenuItem("Pedidos");
@@ -128,4 +140,23 @@ public class Principal extends JFrame {
 
 		tabbedPane.addTab("Clientes", Cliente);
 	}
+	
+	//chamada de tela de clientes
+		private void TelaUsuariosLista() {
+			final visaoUsuario Usuario = new visaoUsuario();
+			ActionListener action = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tabbedPane.remove(Usuario);
+				}
+			};
+			Usuario.setCloseAction(action);
+
+			tabbedPane.addTab("Usuarios", Usuario);
+		}
+	
+	
+
+		
+		
+	
 }

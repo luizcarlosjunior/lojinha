@@ -1,7 +1,7 @@
 package DAO;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 import MODEL.Categoria;
 
@@ -15,6 +15,6 @@ public interface CategoriaDao extends templateDao{
 
 	public Categoria buscar(int id) throws SQLException;
 
-	public List<Categoria> listar() throws SQLException;
+	public ArrayList<Categoria> listar() throws SQLException;
 	
 }

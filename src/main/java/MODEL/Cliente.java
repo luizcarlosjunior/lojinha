@@ -81,4 +81,15 @@ public class Cliente {
 	}
 	
 	
+	public boolean testa_validade() {
+		boolean valido = true;
+		
+		valido = !nome.isEmpty();
+		valido = !email.isEmpty();
+		
+		
+		return valido;
+	}
+	
+	
 }

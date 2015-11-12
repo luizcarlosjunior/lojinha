@@ -8,18 +8,25 @@ import javax.swing.JButton;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
-import ATM.ModeloCategoria;
-import DAO.CategoriaDaoImplements;
-import MODEL.Categoria;
+import ATM.ModeloCliente;
+import ATM.ModeloUsuario;
+import DAO.UsuarioDaoImplements;
+import MODEL.Cliente;
+import MODEL.Usuario;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,26 +34,30 @@ import javax.swing.JTable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JComboBox;
 
-public class MioloCategoria extends JPanel {
+
+public class MioloUsuario extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField txtNOME;
+	private JTextField txtSENHA;
 	private JTable table;
 	
 	//conexão
-	private CategoriaDaoImplements catDAO = new CategoriaDaoImplements();
+	private UsuarioDaoImplements userDAO = new UsuarioDaoImplements();
 	//modelo
-	private ModeloCategoria modelo = new ModeloCategoria();
+	private ModeloUsuario modelo = new ModeloUsuario();
 	
+	JComboBox comboBox = new JComboBox();
 
 	/**
 	 * Create the panel.
 	 */
-	public MioloCategoria() {
+	public MioloUsuario() {	
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -54,24 +65,41 @@ public class MioloCategoria extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel label_1 = new JLabel("NOME");
-		label_1.setHorizontalAlignment(SwingConstants.LEFT);
-		GridBagConstraints gbc_label_1 = new GridBagConstraints();
-		gbc_label_1.anchor = GridBagConstraints.EAST;
-		gbc_label_1.insets = new Insets(0, 0, 5, 5);
-		gbc_label_1.gridx = 0;
-		gbc_label_1.gridy = 2;
-		add(label_1, gbc_label_1);
+		JLabel lblUsurio = new JLabel("USUÁRIO:");
+		GridBagConstraints gbc_lblUsurio = new GridBagConstraints();
+		gbc_lblUsurio.anchor = GridBagConstraints.EAST;
+		gbc_lblUsurio.insets = new Insets(0, 0, 5, 5);
+		gbc_lblUsurio.gridx = 0;
+		gbc_lblUsurio.gridy = 1;
+		add(lblUsurio, gbc_lblUsurio);
 		
-		txtNOME = new JTextField();
-		txtNOME.setColumns(10);
-		GridBagConstraints gbc_txtNOME = new GridBagConstraints();
-		gbc_txtNOME.gridwidth = 3;
-		gbc_txtNOME.insets = new Insets(0, 0, 5, 0);
-		gbc_txtNOME.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtNOME.gridx = 1;
-		gbc_txtNOME.gridy = 2;
-		add(txtNOME, gbc_txtNOME);
+		
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.gridwidth = 3;
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 1;
+		gbc_comboBox.gridy = 1;
+		add(comboBox, gbc_comboBox);
+		
+		JLabel lblSenha = new JLabel("SENHA:");
+		lblSenha.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblSenha = new GridBagConstraints();
+		gbc_lblSenha.anchor = GridBagConstraints.EAST;
+		gbc_lblSenha.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSenha.gridx = 0;
+		gbc_lblSenha.gridy = 2;
+		add(lblSenha, gbc_lblSenha);
+		
+		txtSENHA = new JTextField();
+		txtSENHA.setColumns(10);
+		GridBagConstraints gbc_txtSENHA = new GridBagConstraints();
+		gbc_txtSENHA.gridwidth = 3;
+		gbc_txtSENHA.insets = new Insets(0, 0, 5, 0);
+		gbc_txtSENHA.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSENHA.gridx = 1;
+		gbc_txtSENHA.gridy = 2;
+		add(txtSENHA, gbc_txtSENHA);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -88,7 +116,9 @@ public class MioloCategoria extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
-				txtNOME.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),1) ).trim() );
+				txtSENHA.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),1) ).trim() );
+				
+				
 				
 			}
 		});
@@ -98,22 +128,27 @@ public class MioloCategoria extends JPanel {
 		//seta o modelo na tabela
 		table.setModel(modelo);
 		
-		JButton btnCriarNovo = new JButton("CRIAR NOVO REGISTRO");
+		JButton btnCriarNovo = new JButton("NOVO ACESSO");
 		btnCriarNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String nome = txtNOME.getText().trim();
+				String senha = txtSENHA.getText().trim();
 				
-				if (nome.isEmpty()){
-					JOptionPane.showMessageDialog(null, "O nome não pode ficar em branco.");	
+				int id_usuario = 0; // TODO
+				
+				if (senha.isEmpty()){
+					JOptionPane.showMessageDialog(null, "A senha não pode ficar em branco.");	
 				} else {
 					try {
-						acao_criar(nome);
+						acao_criar(id_usuario,senha);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+					} catch (NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					txtNOME.setText("");	
+					txtSENHA.setText("");	
 				}
 				
 			}
@@ -124,23 +159,25 @@ public class MioloCategoria extends JPanel {
 		gbc_btnCriarNovo.gridy = 17;
 		add(btnCriarNovo, gbc_btnCriarNovo);
 		
-		JButton btnAtualizarRegistroSelecionado = new JButton("ATUALIZAR REGISTRO SELECIONADO");
+		JButton btnAtualizarRegistroSelecionado = new JButton("SALVAR");
 		btnAtualizarRegistroSelecionado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					
 					int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
 					
-					String nome = txtNOME.getText().trim();
+					int id_usuario = 0; // TODO: fixar isso
 					
-					if (nome.isEmpty()){
-						JOptionPane.showMessageDialog(null, "O nome não pode ficar em branco.");	
+					String senha = txtSENHA.getText().trim();
+					
+					if (senha.isEmpty()){
+						JOptionPane.showMessageDialog(null, "A senha não pode ficar em branco.");	
 					} else {
 						int confirmacao = JOptionPane.showConfirmDialog (null, "Deseja realmente atualizar o registro?","Confirmação", JOptionPane.YES_OPTION);
 						
 			            if(confirmacao == 0){
 			            	try {
-								acao_atualizar(id, nome);
+								acao_atualizar(id, id_usuario, senha);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -205,31 +242,41 @@ public class MioloCategoria extends JPanel {
 	}
 	
 	
-	protected void acao_criar(String nome) throws SQLException {
+	protected void acao_criar(int id_usuario, String senha) throws SQLException, NoSuchAlgorithmException {
+		
 		// criar modelo temoprario
-		Categoria c = new Categoria(0, nome);
+		Usuario u = new Usuario(0, id_usuario, senha_md5(senha));
+		
 		//enviar para o DAO
-		catDAO.inserir(c);
+		userDAO.inserir(u);
+		
 		//atualiza a lista
 		acao_listar();
 	}
 	
 	protected void acao_listar() throws SQLException {
-		modelo.setList(catDAO.listar());
+		modelo.setList(userDAO.listar());
 	}
 	
-	private void acao_atualizar(int id, String nome) throws SQLException {
+	private void acao_atualizar(int id, int id_usuario, String senha) throws SQLException, NoSuchAlgorithmException {
 		// criar modelo temoprario
-		Categoria c = new Categoria(id, nome);
+		Usuario u = new Usuario(id, id_usuario, senha_md5(senha));
 		//enviar para o DAO
-		catDAO.atualizar(c);
+		userDAO.atualizar(u);
 		//atualiza a lista
 		acao_listar();
 	}
 	protected void acao_apagar(int id) throws SQLException {
-		catDAO.excluir(id);
+		userDAO.excluir(id);
 		//atualiza a lista
 		acao_listar();
+	}
+	
+	protected String senha_md5(String senha) throws NoSuchAlgorithmException {
+		// md5 para a senha
+		MessageDigest m=MessageDigest.getInstance("MD5");
+		m.update(senha.getBytes(),0,senha.length());
+		return new BigInteger(1,m.digest()).toString(16);
 	}
 
 }

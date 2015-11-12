@@ -10,8 +10,18 @@ package MODEL;
 
 public class Usuario {
 	int id;
-	Cliente id_cliente;
+	int id_cliente;
 	String senha;
+	
+	public Usuario(){
+	}
+	
+	public Usuario(int id, int id_cliente, String senha){
+		this.id = id;
+		this.id_cliente = id_cliente;
+		this.senha = senha;
+	}
+	
 	
 	public int getId() {
 		return id;
@@ -19,10 +29,10 @@ public class Usuario {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Cliente getId_cliente() {
+	public int getId_cliente() {
 		return id_cliente;
 	}
-	public void setId_cliente(Cliente id_cliente) {
+	public void setId_cliente(int id_cliente) {
 		this.id_cliente = id_cliente;
 	}
 	public String getSenha() {

@@ -1,18 +1,19 @@
 package DAO;
 
-import java.util.List;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import MODEL.Usuario;
 
 public interface UsuarioDao extends templateDao{
 	
-	public void inserir(Usuario u);
+	public void inserir(Usuario u) throws SQLException;
 
-	public void atualizar(Usuario u);
+	public void atualizar(Usuario u) throws SQLException;
 
-	public void excluir(Usuario u);
+	public void excluir(int user_id) throws SQLException;
 
-	public Usuario buscar(int id);
+	public Usuario buscar(int user_id) throws SQLException;
 
-	public List<Usuario> listar();
+	public ArrayList<Usuario> listar() throws SQLException;
 }

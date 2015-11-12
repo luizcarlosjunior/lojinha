@@ -48,6 +48,9 @@ public class MioloCliente extends JPanel {
 	private JTextField txtCidade;
 	private JTextField txtEmail;
 	private JTextField txtEndereco;
+	JComboBox cbGeneros = new JComboBox(ENUM.EnumGenero.values());
+	JComboBox cbEstados = new JComboBox(ENUM.EnumEstado.values());
+	
 	
 
 	/**
@@ -82,6 +85,7 @@ public class MioloCliente extends JPanel {
 		
 		JLabel lblNewLabel_2 = new JLabel("EMAIL");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 3;
 		gbc_lblNewLabel_2.gridy = 2;
@@ -158,7 +162,7 @@ public class MioloCliente extends JPanel {
 		gbc_lblNewLabel_4.gridy = 4;
 		add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
-		final JComboBox cbEstados = new JComboBox(ENUM.EnumEstado.values());
+		
 		GridBagConstraints gbc_cbEstados = new GridBagConstraints();
 		gbc_cbEstados.gridwidth = 2;
 		gbc_cbEstados.insets = new Insets(0, 0, 5, 0);
@@ -175,7 +179,7 @@ public class MioloCliente extends JPanel {
 		gbc_lblGenero.gridy = 5;
 		add(lblGenero, gbc_lblGenero);
 		
-		final JComboBox cbGeneros = new JComboBox(ENUM.EnumGenero.values());
+		
 		GridBagConstraints gbc_cbGeneros = new GridBagConstraints();
 		gbc_cbGeneros.gridwidth = 2;
 		gbc_cbGeneros.insets = new Insets(0, 0, 5, 5);
@@ -189,10 +193,10 @@ public class MioloCliente extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 14;
-		gbc_scrollPane.gridwidth = 5;
+		gbc_scrollPane.gridwidth = 6;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 6;
 		add(scrollPane, gbc_scrollPane);
 		
@@ -201,17 +205,38 @@ public class MioloCliente extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
-				txtNome.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),1) ).trim() );
-				txtTelefone.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),2) ).trim() );
-				txtEndereco.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),3) ).trim() );
-				txtCidade.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),4) ).trim() );
-				cbEstados.setEditable(true);
-				cbEstados.setSelectedItem( String.valueOf(modelo.getValueAt(table.getSelectedRow(),5)).trim() );
-				cbEstados.setEditable(false);
-				txtEmail.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),6) ).trim() );
-				cbGeneros.setEditable(true);
-				cbGeneros.setSelectedItem( String.valueOf(modelo.getValueAt(table.getSelectedRow(),7)).trim() );
-				cbGeneros.setEditable(false);
+				// pega a row selecionada
+				int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
+				
+				// busca no banco pelos dados para ser mais seguro
+				Cliente c;
+				try {
+					c = acao_buscar(id);
+					
+					txtNome.setText( c.getNome().trim() );
+					txtTelefone.setText( c.getTelefone().trim() );
+					txtEndereco.setText( c.getEndereco().trim() );
+					txtCidade.setText( c.getCidade().trim() );
+					cbEstados.setEditable(true);
+					cbEstados.setSelectedItem( c.getEstado().trim() );
+					cbEstados.setEditable(false);
+					txtEmail.setText( c.getEmail().trim() );
+					cbGeneros.setEditable(true);
+					cbGeneros.setSelectedItem( c.getGenero().trim() );
+					cbGeneros.setEditable(false);
+					
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Problemas ao resgatar os dados do cliente");
+				}
+		
+				
+				
+				
+				
+				
 				
 			}
 		});
@@ -225,7 +250,7 @@ public class MioloCliente extends JPanel {
 		btnCriarNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Integer id = 0;
+				int id = 0;
 				String nome = txtNome.getText().trim();
 				String telefone = txtTelefone.getText().trim();
 				String endereco = txtEndereco.getText().trim();
@@ -233,15 +258,21 @@ public class MioloCliente extends JPanel {
 				String estado = cbEstados.getSelectedItem().toString();
 				String email = txtEmail.getText().trim();
 				String genero = cbGeneros.getSelectedItem().toString();
-
+				
 				Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
 
-				try {
-					acao_criar(c);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if(c.testa_validade()){
+					try {
+						acao_criar(c);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}else{
+					JOptionPane.showMessageDialog(null, "Estão faltando dados do cliente");
 				}
+				
+				
 			}
 		});
 		GridBagConstraints gbc_btnCriarNovo = new GridBagConstraints();
@@ -253,23 +284,32 @@ public class MioloCliente extends JPanel {
 		JButton btnAtualizarRegistroSelecionado = new JButton("ATUALIZAR REGISTRO SELECIONADO");
 		btnAtualizarRegistroSelecionado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				Integer id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
-				String nome = txtNome.getText().trim();
-				String telefone = txtTelefone.getText().trim();
-				String endereco = txtEndereco.getText().trim();
-				String cidade = txtCidade.getText().trim();
-				String estado = cbEstados.getSelectedItem().toString();
-				String email = txtEmail.getText().trim();
-				String genero = cbGeneros.getSelectedItem().toString();
-				
-				Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
-				
-				try {
-					acao_atualizar(c);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				try{
+					int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
+					
+					String nome = txtNome.getText().trim();
+					String telefone = txtTelefone.getText().trim();
+					String endereco = txtEndereco.getText().trim();
+					String cidade = txtCidade.getText().trim();
+					String estado = cbEstados.getSelectedItem().toString();
+					String email = txtEmail.getText().trim();
+					String genero = cbGeneros.getSelectedItem().toString();
+					
+					Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
+					
+					if(c.testa_validade()){
+						try {
+							acao_atualizar(c);
+							limpara_campos();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}	
+					}else{
+						JOptionPane.showMessageDialog(null, "Estão faltando dados do cliente");
+					}					
+		        } catch (Exception e_apaga) {
+		        	JOptionPane.showMessageDialog(null, "Você precisa selecionar um elemento.");	
 				}
 				
 			}
@@ -283,24 +323,28 @@ public class MioloCliente extends JPanel {
 		JButton btnApagarSelecionado = new JButton("APAGAR SELECIONADO");
 		btnApagarSelecionado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try{
+					//busca o id
+					int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
+					
+					//pergunta se quer realmente apagar
+					int confirmacao = JOptionPane.showConfirmDialog (null, "Quer realmente apagar o registro?","Confirmação", JOptionPane.YES_OPTION);
+					
+		            if(confirmacao == 0){
+		            		
+		            	// tenta apagar
+						try {
+							acao_apagar(id);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 				
+		            }
+				} catch (Exception e_apaga) {
+					JOptionPane.showMessageDialog(null, "Você precisa selecionar um elemento.");	
+				}
 				
-				//pergunta se quer realmente apagar
-				int confirmacao = JOptionPane.showConfirmDialog (null, "Quer realmente apagar o registro?","Confirmação", JOptionPane.YES_OPTION);
-				
-	            if(confirmacao == 0){
-	            	//busca o id
-	            	Integer id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
-	            	
-	            	// tenta apagar
-					try {
-						acao_apagar(id);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			
-	            }
             
 			
 			
@@ -309,16 +353,9 @@ public class MioloCliente extends JPanel {
 		});
 		GridBagConstraints gbc_btnApagarSelecionado = new GridBagConstraints();
 		gbc_btnApagarSelecionado.insets = new Insets(0, 0, 5, 5);
-		gbc_btnApagarSelecionado.gridx = 3;
+		gbc_btnApagarSelecionado.gridx = 4;
 		gbc_btnApagarSelecionado.gridy = 20;
 		add(btnApagarSelecionado, gbc_btnApagarSelecionado);
-		
-		JButton btnNewButton = new JButton("CRIAR SENHA");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.gridx = 5;
-		gbc_btnNewButton.gridy = 20;
-		add(btnNewButton, gbc_btnNewButton);
 		
 		//atualiza a lista
 			try {
@@ -342,6 +379,12 @@ public class MioloCliente extends JPanel {
 		modelo.setList(cliDAO.listar());
 	}
 	
+	private Cliente acao_buscar(int id) throws SQLException {
+		//acao_listar();
+		return cliDAO.buscar(id);
+		
+	}
+	
 	private void acao_apagar(int id) throws SQLException {
 		//enviar para o DAO
 		cliDAO.excluir(id);
@@ -355,5 +398,20 @@ public class MioloCliente extends JPanel {
 		//atualiza a lista
 		acao_listar();
 	}
+	
+
+	public void limpara_campos(){
+		txtNome.setText("");
+		txtTelefone.setText("");
+		txtEndereco.setText("");
+		txtCidade.setText("");
+		txtEmail.setText("");
+		cbEstados.setEditable(true);
+		cbEstados.setSelectedIndex(0);
+		cbEstados.setEditable(false);
+		cbGeneros.setEditable(true);
+		cbGeneros.setSelectedIndex(0);
+		cbGeneros.setEditable(false);
+	}	
 
 }

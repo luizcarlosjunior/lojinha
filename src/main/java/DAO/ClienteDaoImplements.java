@@ -70,8 +70,25 @@ public class ClienteDaoImplements implements ClienteDao {
 	}
 	
 	public Cliente buscar(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		abrirConexao();
+		Statement st = conn.createStatement();
+		ResultSet result = st.executeQuery("SELECT * FROM CLIENTES WHERE ID = " + id + " LIMIT 1");
+		
+		Cliente c = new Cliente();
+		
+		while (result.next()) {
+			c.setId( result.getInt(1) );
+			c.setNome( result.getString(2) );
+			c.setTelefone( result.getString(3) );
+			c.setEndereco( result.getString(4) );
+			c.setCidade( result.getString(5) );
+			c.setEstado( result.getString(6) );
+			c.setEmail( result.getString(7) );
+			c.setGenero( result.getString(8) );
+		}
+		
+		fecharConexao();
+		return c;
 	}
 	
 	public ArrayList<Cliente> listar() throws SQLException {
