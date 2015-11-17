@@ -1,11 +1,14 @@
 package ATM;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataListener;
 
 import DAO.ClienteDaoImplements;
+import MODEL.Cliente;
 
 public class ComboBoxModelClientes extends AbstractListModel implements ComboBoxModel {
 	
@@ -18,25 +21,36 @@ public class ComboBoxModelClientes extends AbstractListModel implements ComboBox
 	private String selecionado = "";
 	
 	private ClienteDaoImplements cliDAO = new ClienteDaoImplements();
+	
+	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	
+	
+	public ArrayList<Cliente> lista() throws SQLException{
+		if (clientes.isEmpty()) {
+			clientes = cliDAO.listar();
+		}
+		return clientes;
+	}
+	
+	
     
     // QUAL É A QUANTIDADE DE OPÇÕES NO COMBOBOX
     public int getSize(){
     	int result = 0;
-        try {
-			 result = cliDAO.listar().size();
+		try {
+			result = lista().size();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
         return result;
     }
 
     //QUAL O ELEMENTO A SER SELECIONADO
     public Object getElementAt(int index) { 
     	String result = "erro";
-    	try {
-			result = index + " - " + cliDAO.listar().get(index).getNome();
+		try {
+			result = index + " - " + lista().get(index).getNome();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
