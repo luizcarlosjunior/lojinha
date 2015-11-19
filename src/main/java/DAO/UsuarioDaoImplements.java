@@ -28,8 +28,9 @@ public class UsuarioDaoImplements implements UsuarioDao {
 	}
 
 	public void inserir(Usuario u) throws SQLException {
+		
 		abrirConexao();
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO USUARIOS (USUARIO_ID,SENHA) VALUES (?,?)");
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO USUARIOS (CLIENTE_ID,SENHA) VALUES (?,?)");
 		ps.setInt(1, u.getId_cliente());
 		ps.setString(2, u.getSenha());
 		ps.executeUpdate();
@@ -40,7 +41,7 @@ public class UsuarioDaoImplements implements UsuarioDao {
 
 	public void atualizar(Usuario u) throws SQLException {
 		abrirConexao();
-		PreparedStatement ps = conn.prepareStatement("UPDATE USUARIOS SET SENHA = ? WHERE USER_ID = ?");
+		PreparedStatement ps = conn.prepareStatement("UPDATE USUARIOS SET SENHA = ? WHERE CLIENTE_ID = ?");
 		ps.setString(1, u.getSenha());
 		ps.setInt(2, u.getId_cliente());
 		ps.executeUpdate();
@@ -48,10 +49,10 @@ public class UsuarioDaoImplements implements UsuarioDao {
 		fecharConexao();
 	}
 	
-	public void excluir(int user_id) throws SQLException {
+	public void excluir(int id) throws SQLException {
 		abrirConexao();
-		PreparedStatement ps = conn.prepareStatement("DELETE FROM USUARIOS WHERE USER_ID = ?");
-		ps.setInt(1, user_id);
+		PreparedStatement ps = conn.prepareStatement("DELETE FROM USUARIOS WHERE ID = ?");
+		ps.setInt(1, id);
 		ps.executeUpdate();
 		ps.close();
 		fecharConexao();
@@ -81,7 +82,7 @@ public class UsuarioDaoImplements implements UsuarioDao {
 	public Usuario buscar(int user_id) throws SQLException {
 		abrirConexao();
 		Statement st = conn.createStatement();
-		ResultSet result = st.executeQuery("SELECT * FROM USUARIOS WHERE USER_ID = " + user_id + " LIMIT = 1");
+		ResultSet result = st.executeQuery("SELECT * FROM USUARIOS WHERE CLIENTE_ID = " + user_id + " LIMIT = 1");
 		
 		Usuario u = new Usuario();
 		

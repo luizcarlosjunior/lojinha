@@ -51,12 +51,21 @@ public class MioloCliente extends JPanel {
 	JComboBox cbGeneros = new JComboBox(ENUM.EnumGenero.values());
 	JComboBox cbEstados = new JComboBox(ENUM.EnumEstado.values());
 	
+	int status = 1;
+	
+	JButton btnAtualizarRegistroSelecionado = new JButton("SALVAR REGISTRO SELECIONADO");
+	JButton btnCriarNovo = new JButton("SALVAR O NOVO CLIENTE");
+	
 	
 
 	/**
 	 * Create the panel.
 	 */
 	public MioloCliente() {
+		
+		//ja atualiza a janela de cara...
+		atualiza_visao();
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -205,6 +214,11 @@ public class MioloCliente extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
+				
+				//troca o botao
+				status = 0;
+				atualiza_visao();
+				
 				// pega a row selecionada
 				int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
 				
@@ -246,33 +260,38 @@ public class MioloCliente extends JPanel {
 		//seta o modelo na tabela
 		table.setModel(modelo);
 		
-		JButton btnCriarNovo = new JButton("CRIAR NOVO REGISTRO");
+		
 		btnCriarNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				int id = 0;
-				String nome = txtNome.getText().trim();
-				String telefone = txtTelefone.getText().trim();
-				String endereco = txtEndereco.getText().trim();
-				String cidade = txtCidade.getText().trim();
-				String estado = cbEstados.getSelectedItem().toString();
-				String email = txtEmail.getText().trim();
-				String genero = cbGeneros.getSelectedItem().toString();
-				
-				Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
-
-				if(c.testa_validade()){
-					try {
-						acao_criar(c);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}	
-				}else{
-					JOptionPane.showMessageDialog(null, "Estão faltando dados do cliente");
+				if (status == 1){
+					int id = 0;
+					String nome = txtNome.getText().trim();
+					String telefone = txtTelefone.getText().trim();
+					String endereco = txtEndereco.getText().trim();
+					String cidade = txtCidade.getText().trim();
+					String estado = cbEstados.getSelectedItem().toString();
+					String email = txtEmail.getText().trim();
+					String genero = cbGeneros.getSelectedItem().toString();
+					
+					Cliente c = new Cliente(id, nome, telefone, endereco, cidade, estado, email, genero);
+	
+					if(c.testa_validade()){
+						try {
+							acao_criar(c);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	
+					}else{
+						JOptionPane.showMessageDialog(null, "Estão faltando dados do cliente");
+					}
+					
+				} else {
+					status = 1;
+					limpar_campos();
+					atualiza_visao();
 				}
-				
-				
 			}
 		});
 		GridBagConstraints gbc_btnCriarNovo = new GridBagConstraints();
@@ -281,7 +300,7 @@ public class MioloCliente extends JPanel {
 		gbc_btnCriarNovo.gridy = 20;
 		add(btnCriarNovo, gbc_btnCriarNovo);
 		
-		JButton btnAtualizarRegistroSelecionado = new JButton("ATUALIZAR REGISTRO SELECIONADO");
+		
 		btnAtualizarRegistroSelecionado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -300,7 +319,11 @@ public class MioloCliente extends JPanel {
 					if(c.testa_validade()){
 						try {
 							acao_atualizar(c);
-							limpara_campos();
+							limpar_campos();
+							
+							//troca o botao
+							status = 1;
+							atualiza_visao();
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -399,8 +422,18 @@ public class MioloCliente extends JPanel {
 		acao_listar();
 	}
 	
+	public void atualiza_visao(){
+		if (status == 1){
+			btnAtualizarRegistroSelecionado.setVisible(false);
+			btnCriarNovo.setText("SALVAR O NOVO CLIENTE");
+		}else{
+			btnAtualizarRegistroSelecionado.setVisible(true);
+			btnCriarNovo.setText("NOVO CLIENTE");
+		}
+	}
+	
 
-	public void limpara_campos(){
+	public void limpar_campos(){
 		txtNome.setText("");
 		txtTelefone.setText("");
 		txtEndereco.setText("");
@@ -412,6 +445,7 @@ public class MioloCliente extends JPanel {
 		cbGeneros.setEditable(true);
 		cbGeneros.setSelectedIndex(0);
 		cbGeneros.setEditable(false);
+		btnAtualizarRegistroSelecionado.setVisible(false);
 	}	
 
 }

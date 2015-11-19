@@ -53,15 +53,26 @@ public class MioloUsuario extends JPanel {
 	//modelo
 	private ModeloUsuario modelo = new ModeloUsuario();
 	
-	JComboBox comboBox = new JComboBox();
+	JComboBox cbUsuarios = new JComboBox();
+	JLabel lblUsurio = new JLabel("USUÁRIO:");
+	JButton btnCriarNovo = new JButton("SALVAR O NOVO USUÁRIO");
+	JButton btnAtualizarRegistroSelecionado = new JButton("ATUALIZAR SENHA DO SELECIONADO");
+	
+	private ComboBoxModelClientes comboBoxModelClientes = new ComboBoxModelClientes();
 	
 	/**
 	 * Create the panel.
 	 */
 	public MioloUsuario() {
 		
-		ComboBoxModelClientes comboBoxModelClientes = new ComboBoxModelClientes();
-	    comboBox.setModel(comboBoxModelClientes);
+		
+	    cbUsuarios.setModel(comboBoxModelClientes);
+	    
+	    // para evitar dar erros
+	    cbUsuarios.setSelectedIndex(1);
+	    // esconde o botao de atualizar
+	    btnAtualizarRegistroSelecionado.setVisible(false);
+	    
 		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -71,7 +82,7 @@ public class MioloUsuario extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblUsurio = new JLabel("USUÁRIO:");
+		
 		GridBagConstraints gbc_lblUsurio = new GridBagConstraints();
 		gbc_lblUsurio.anchor = GridBagConstraints.EAST;
 		gbc_lblUsurio.insets = new Insets(0, 0, 5, 5);
@@ -80,13 +91,13 @@ public class MioloUsuario extends JPanel {
 		add(lblUsurio, gbc_lblUsurio);
 		
 		
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.gridwidth = 3;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 1;
-		add(comboBox, gbc_comboBox);
+		GridBagConstraints gbc_cbUsuarios = new GridBagConstraints();
+		gbc_cbUsuarios.gridwidth = 3;
+		gbc_cbUsuarios.insets = new Insets(0, 0, 5, 5);
+		gbc_cbUsuarios.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cbUsuarios.gridx = 1;
+		gbc_cbUsuarios.gridy = 1;
+		add(cbUsuarios, gbc_cbUsuarios);
 		
 		JLabel lblSenha = new JLabel("SENHA:");
 		lblSenha.setHorizontalAlignment(SwingConstants.LEFT);
@@ -121,10 +132,10 @@ public class MioloUsuario extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
-				txtSENHA.setText( String.valueOf(modelo.getValueAt(table.getSelectedRow(),1) ).trim() );
-				
-				
+				btnAtualizarRegistroSelecionado.setVisible(true);
+				btnCriarNovo.setText("NOVO ACESSO");
+				cbUsuarios.setVisible(false);
+				lblUsurio.setVisible(false);
 				
 			}
 		});
@@ -134,29 +145,51 @@ public class MioloUsuario extends JPanel {
 		//seta o modelo na tabela
 		table.setModel(modelo);
 		
-		JButton btnCriarNovo = new JButton("NOVO ACESSO");
+		
 		btnCriarNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String senha = txtSENHA.getText().trim();
 				
-				int id_usuario = 0; // TODO
-				
-				if (senha.isEmpty()){
-					JOptionPane.showMessageDialog(null, "A senha não pode ficar em branco.");	
-				} else {
+				if (cbUsuarios.isVisible()) {
+					// se esta visivel o seletor de clientes cria um novo...
+					
+					
+					
+					String senha = txtSENHA.getText().trim();
+					
+					int id_usuario = 0;
+
 					try {
-						acao_criar(id_usuario,senha);
-					} catch (SQLException e) {
+						id_usuario = comboBoxModelClientes.getSelectedItemID(cbUsuarios.getSelectedIndex());
+					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						e1.printStackTrace();
 					}
-					txtSENHA.setText("");	
+
+					
+					if (senha.isEmpty() ){
+						JOptionPane.showMessageDialog(null, "A senha não pode ficar em branco.");
+					} else {
+						try {
+							acao_criar(id_usuario,senha);
+						} catch (SQLException e) {
+							JOptionPane.showMessageDialog(null, "Desculpe mas este usuário já tem uma senha.");	
+							e.printStackTrace();
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						txtSENHA.setText("");	
+					}
+					
+				} else {
+					// caso esteja oculto mostra os objetos
+					btnCriarNovo.setText("SALVAR O NOVO USUÁRIO");
+					btnAtualizarRegistroSelecionado.setVisible(false);
+					cbUsuarios.setVisible(true);
+					lblUsurio.setVisible(true);
+					
 				}
-				
 			}
 		});
 		GridBagConstraints gbc_btnCriarNovo = new GridBagConstraints();
@@ -165,7 +198,7 @@ public class MioloUsuario extends JPanel {
 		gbc_btnCriarNovo.gridy = 17;
 		add(btnCriarNovo, gbc_btnCriarNovo);
 		
-		JButton btnAtualizarRegistroSelecionado = new JButton("SALVAR");
+		
 		btnAtualizarRegistroSelecionado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -184,6 +217,8 @@ public class MioloUsuario extends JPanel {
 			            if(confirmacao == 0){
 			            	try {
 								acao_atualizar(id, id_usuario, senha);
+								txtSENHA.setText("");
+								btnAtualizarRegistroSelecionado.setVisible(false);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();

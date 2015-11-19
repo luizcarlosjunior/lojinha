@@ -32,8 +32,6 @@ public class ComboBoxModelClientes extends AbstractListModel implements ComboBox
 		return clientes;
 	}
 	
-	
-    
     // QUAL É A QUANTIDADE DE OPÇÕES NO COMBOBOX
     public int getSize(){
     	int result = 0;
@@ -50,7 +48,7 @@ public class ComboBoxModelClientes extends AbstractListModel implements ComboBox
     public Object getElementAt(int index) { 
     	String result = "erro";
 		try {
-			result = index + " - " + lista().get(index).getNome();
+			result = lista().get(index).getId() + " - " + lista().get(index).getNome();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,13 +58,18 @@ public class ComboBoxModelClientes extends AbstractListModel implements ComboBox
 
     //PEGA O ELEMENTO SELECIONADO E JOGA NA VARIAVEL
     public void setSelectedItem(Object anItem) {
-        selecionado = (String) anItem;
+    	selecionado = (String) anItem;
     }
     
     public Object getSelectedItem() {
         return (String) selecionado;
     }
+    
+    public int getSelectedItemID(int index) throws SQLException {
+        return lista().get(index).getId();
+    }
 
+    
 	public void addListDataListener(ListDataListener arg0) {
 		// TODO Auto-generated method stub
 		
