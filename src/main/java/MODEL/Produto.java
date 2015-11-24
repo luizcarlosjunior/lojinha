@@ -7,16 +7,27 @@
 
 package MODEL;
 
-import java.math.BigDecimal;
-
-import ENUM.EnumUnidade;
-
 public class Produto {
 	int id;
 	String codigo_de_barras;
-	Categoria categoria;
+	String categoria;
 	String descricao;
-	EnumUnidade unidade;
+	String unidade;
+	Float custo;
+	Float margem_de_lucro;
+	
+	public Produto(){}
+	
+	public Produto(Integer id, String codigo_de_barras, String categoria, String descricao, String unidade, Float custo, Float margem_de_lucro) {
+		this.id = id;
+		this.codigo_de_barras = codigo_de_barras;
+		this.categoria = categoria;
+		this.descricao = descricao;
+		this.unidade = unidade;
+		this.custo = custo;
+		this.margem_de_lucro = margem_de_lucro;
+	}
+	
 	
 	public int getId() {
 		return id;
@@ -30,10 +41,10 @@ public class Produto {
 	public void setCodigo_de_barras(String codigo_de_barras) {
 		this.codigo_de_barras = codigo_de_barras;
 	}
-	public Categoria getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 	public String getDescricao() {
@@ -42,24 +53,33 @@ public class Produto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public EnumUnidade getUnidade() {
+	public String getUnidade() {
 		return unidade;
 	}
-	public void setUnidade(EnumUnidade unidade) {
+	public void setUnidade(String unidade) {
 		this.unidade = unidade;
 	}
-	public BigDecimal getCusto() {
+	public Float getCusto() {
 		return custo;
 	}
-	public void setCusto(BigDecimal custo) {
+	public void setCusto(Float custo) {
 		this.custo = custo;
 	}
-	public BigDecimal getMargem_de_lucro() {
+	public Float getMargem_de_lucro() {
 		return margem_de_lucro;
 	}
-	public void setMargem_de_lucro(BigDecimal margem_de_lucro) {
+	public void setMargem_de_lucro(Float margem_de_lucro) {
 		this.margem_de_lucro = margem_de_lucro;
 	}
-	BigDecimal custo;
-	BigDecimal margem_de_lucro;
+
+	public boolean testa_validade() {
+		boolean valido = true;
+		
+		valido = !codigo_de_barras.isEmpty();
+		valido = !descricao.isEmpty();
+		
+		return valido;
+	}
+	
+	
 }

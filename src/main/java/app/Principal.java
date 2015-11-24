@@ -79,7 +79,7 @@ public class Principal extends JFrame {
 		mntmprodutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// chamar a lista de produtos
-				//TelaProdutosLista();
+				TelaProdutosLista();
 			}
 		});
 		mnarquivo.add(mntmprodutos);
@@ -154,7 +154,20 @@ public class Principal extends JFrame {
 			tabbedPane.addTab("Usuarios", Usuario);
 		}
 	
-	
+
+
+//chamada de tela de clientes
+	private void TelaProdutosLista() {
+		final visaoProduto Produto = new visaoProduto();
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.remove(Produto);
+			}
+		};
+		Produto.setCloseAction(action);
+
+		tabbedPane.addTab("Produtos", Produto);
+	}
 
 		
 		
