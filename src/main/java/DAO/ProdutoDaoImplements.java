@@ -53,10 +53,10 @@ public class ProdutoDaoImplements implements ProdutoDao {
 		
 		ps.setString(1, p.getCodigo_de_barras());
 		ps.setString(2, p.getCategoria());
-		ps.setString(2, p.getDescricao());
-		ps.setString(2, p.getUnidade());
-		ps.setFloat(2, p.getCusto());
-		ps.setFloat(2, p.getMargem_de_lucro());
+		ps.setString(3, p.getDescricao());
+		ps.setString(4, p.getUnidade());
+		ps.setFloat(5, p.getCusto());
+		ps.setFloat(6, p.getMargem_de_lucro());
 		
 		ps.setInt(7, p.getId());
 		
@@ -103,7 +103,7 @@ public class ProdutoDaoImplements implements ProdutoDao {
 	public Produto buscar(int id) throws SQLException {
 		abrirConexao();
 		Statement st = conn.createStatement();
-		ResultSet result = st.executeQuery("SELECT * FROM PRODUTOS WHERE ID = " + id + " LIMIT = 1");
+		ResultSet result = st.executeQuery("SELECT * FROM PRODUTOS WHERE ID = " + id + " LIMIT 1");
 		
 		Produto p = new Produto();
 		
