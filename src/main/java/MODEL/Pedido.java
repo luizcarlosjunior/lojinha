@@ -13,7 +13,23 @@ public class Pedido {
 	//dados do pedido
 	int id;
 	String data;
+	
 	BigDecimal valor_total;
+	BigDecimal valor_desconto;
+	BigDecimal valor_liquido;
+	
+	int total_itens;
+	
+	// dados do cliente para persis
+	int cliente_id;
+	String nome;
+	String telefone;
+	String endereco;
+	String cidade;
+	String estado;
+	String email;
+	String genero;
+	
 	public int getId() {
 		return id;
 	}
@@ -50,11 +66,11 @@ public class Pedido {
 	public void setTotal_itens(int total_itens) {
 		this.total_itens = total_itens;
 	}
-	public int getId_cliente() {
-		return id_cliente;
+	public int getCliente_id() {
+		return cliente_id;
 	}
-	public void setId_cliente(int id_cliente) {
-		this.id_cliente = id_cliente;
+	public void setCliente_id(int cliente_id) {
+		this.cliente_id = cliente_id;
 	}
 	public String getNome() {
 		return nome;
@@ -98,17 +114,6 @@ public class Pedido {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-	BigDecimal valor_desconto;
-	BigDecimal valor_liquido;
-	int total_itens;
-	// dados do cliente
-	int id_cliente;
-	String nome;
-	String telefone;
-	String endereco;
-	String cidade;
-	String estado;
-	String email;
-	String genero;
+
 
 }

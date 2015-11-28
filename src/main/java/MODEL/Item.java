@@ -15,6 +15,7 @@ public class Item {
 	int id;
 	BigDecimal desconto;
 	BigDecimal valor_liquido;
+	int quantidade;
 	
 	//dados do produto
 	int id_produto;
@@ -23,8 +24,9 @@ public class Item {
 	EnumUnidade unidade;
 	BigDecimal custo;
 	BigDecimal margem_de_lucro;
+	
 	//dados da categoria
-	Categoria id_categoria;
+	Categoria categoria_id;
 	String categoria_nome;
 	
 	public int getId() {
@@ -33,6 +35,14 @@ public class Item {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public int getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+	
 	public BigDecimal getDesconto() {
 		return desconto;
 	}
@@ -81,11 +91,11 @@ public class Item {
 	public void setMargem_de_lucro(BigDecimal margem_de_lucro) {
 		this.margem_de_lucro = margem_de_lucro;
 	}
-	public Categoria getId_categoria() {
-		return id_categoria;
+	public Categoria getCategoria_id() {
+		return categoria_id;
 	}
-	public void setId_categoria(Categoria id_categoria) {
-		this.id_categoria = id_categoria;
+	public void setCategoria_id(Categoria categoria_id) {
+		this.categoria_id = categoria_id;
 	}
 	public String getCategoria_nome() {
 		return categoria_nome;
