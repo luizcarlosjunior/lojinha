@@ -95,6 +95,12 @@ public class Principal extends JFrame {
 		mnarquivo.add(mntmUsurios);
 		
 		JMenuItem mntmPedidos = new JMenuItem("Pedidos");
+		mntmPedidos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				TelaPedidosLista();
+			}
+		});
 		mnarquivo.add(mntmPedidos);
 		
 		JMenuItem mntmSair = new JMenuItem("Sair");
@@ -123,6 +129,7 @@ public class Principal extends JFrame {
 				tabbedPane.remove(Categoria);
 			}
 		};
+		
 		Categoria.setCloseAction(action);
 
 		tabbedPane.addTab("Categorias", Categoria);
@@ -136,6 +143,7 @@ public class Principal extends JFrame {
 				tabbedPane.remove(Cliente);
 			}
 		};
+		
 		Cliente.setCloseAction(action);
 
 		tabbedPane.addTab("Clientes", Cliente);
@@ -149,6 +157,7 @@ public class Principal extends JFrame {
 					tabbedPane.remove(Usuario);
 				}
 			};
+			
 			Usuario.setCloseAction(action);
 
 			tabbedPane.addTab("Usuarios", Usuario);
@@ -156,19 +165,34 @@ public class Principal extends JFrame {
 	
 
 
-//chamada de tela de clientes
-	private void TelaProdutosLista() {
-		final visaoProduto Produto = new visaoProduto();
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tabbedPane.remove(Produto);
-			}
-		};
-		Produto.setCloseAction(action);
+	//chamada de tela de clientes
+		private void TelaProdutosLista() {
+			final visaoProduto Produto = new visaoProduto();
+			ActionListener action = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tabbedPane.remove(Produto);
+				}
+			};
+			
+			Produto.setCloseAction(action);
+	
+			tabbedPane.addTab("Produtos", Produto);
+		}
 
-		tabbedPane.addTab("Produtos", Produto);
-	}
-
+		
+		//chamada de tela de pedidos
+		private void TelaPedidosLista() {
+			final visaoPedido Pedido = new visaoPedido();
+			ActionListener action = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tabbedPane.remove(Pedido);
+				}
+			};
+			
+			Pedido.setCloseAction(action);
+	
+			tabbedPane.addTab("Produtos", Pedido);
+		}
 		
 		
 	

@@ -7,11 +7,13 @@
 
 package MODEL;
 
+import java.sql.Timestamp;
+
 public class Pedido {
 	//dados do pedido
 	int id;
 	int status;
-	int data;
+	Timestamp data;
 	Float valor_total;
 	Float valor_desconto;
 	Float valor_liquido;
@@ -43,11 +45,11 @@ public class Pedido {
 		this.status = status;
 	}
 	
-	public int getData() {
+	public Timestamp getData() {
 		return data;
 	}
-	public void setData(int i) {
-		this.data = i;
+	public void setData(Timestamp timestamp) {
+		this.data = timestamp;
 	}
 	public Float getValor_total() {
 		return valor_total;
