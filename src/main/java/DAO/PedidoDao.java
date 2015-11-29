@@ -1,20 +1,21 @@
 package DAO;
 
-import java.util.List;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import MODEL.Pedido;
 
 public interface PedidoDao extends templateDao{
 	
-	public void inserir(Pedido pedido);
+	public void inserir(Pedido pedido) throws SQLException;
 
-	public void atualizar(Pedido pedido);
+	public void atualizar(Pedido pedido) throws SQLException;
 
-	public void excluir(Pedido pedido);
+	public void excluir(int id) throws SQLException;
 
-	public Pedido buscar(int id);
+	public Pedido buscar(int id) throws SQLException;
 
-	public List<Pedido> listar_pedidos_cliente(int cliente_id);
+	public ArrayList<Pedido> listar_pedidos_cliente(int cliente_id) throws SQLException;
 	
-	public List<Pedido> listar();
+	public ArrayList<Pedido> listar() throws SQLException;
 }

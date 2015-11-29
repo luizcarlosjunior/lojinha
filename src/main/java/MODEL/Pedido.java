@@ -7,19 +7,15 @@
 
 package MODEL;
 
-import java.math.BigDecimal;
-
 public class Pedido {
 	//dados do pedido
 	int id;
-	String data;
-	
-	BigDecimal valor_total;
-	BigDecimal valor_desconto;
-	BigDecimal valor_liquido;
-	
+	int status;
+	int data;
+	Float valor_total;
+	Float valor_desconto;
+	Float valor_liquido;
 	int total_itens;
-	
 	// dados do cliente para persis
 	int cliente_id;
 	String nome;
@@ -30,34 +26,45 @@ public class Pedido {
 	String email;
 	String genero;
 	
+	
+	public Pedido(){}
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getData() {
+
+	public int getStatus(){
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
+	public int getData() {
 		return data;
 	}
-	public void setData(String data) {
-		this.data = data;
+	public void setData(int i) {
+		this.data = i;
 	}
-	public BigDecimal getValor_total() {
+	public Float getValor_total() {
 		return valor_total;
 	}
-	public void setValor_total(BigDecimal valor_total) {
+	public void setValor_total(Float valor_total) {
 		this.valor_total = valor_total;
 	}
-	public BigDecimal getValor_desconto() {
+	public Float getValor_desconto() {
 		return valor_desconto;
 	}
-	public void setValor_desconto(BigDecimal valor_desconto) {
+	public void setValor_desconto(Float valor_desconto) {
 		this.valor_desconto = valor_desconto;
 	}
-	public BigDecimal getValor_liquido() {
+	public Float getValor_liquido() {
 		return valor_liquido;
 	}
-	public void setValor_liquido(BigDecimal valor_liquido) {
+	public void setValor_liquido(Float valor_liquido) {
 		this.valor_liquido = valor_liquido;
 	}
 	public int getTotal_itens() {
