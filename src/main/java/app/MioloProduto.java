@@ -100,13 +100,13 @@ public class MioloProduto extends JPanel {
 		gbc_txtCodigoDeBarras.gridy = 2;
 		add(txtCodigoDeBarras, gbc_txtCodigoDeBarras);
 		
-		JLabel lblPreco = new JLabel("PREÇO");
-		GridBagConstraints gbc_lblPreco = new GridBagConstraints();
-		gbc_lblPreco.anchor = GridBagConstraints.EAST;
-		gbc_lblPreco.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPreco.gridx = 3;
-		gbc_lblPreco.gridy = 2;
-		add(lblPreco, gbc_lblPreco);
+		JLabel lblLucro = new JLabel("LUCRO");
+		GridBagConstraints gbc_lblLucro = new GridBagConstraints();
+		gbc_lblLucro.anchor = GridBagConstraints.EAST;
+		gbc_lblLucro.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLucro.gridx = 3;
+		gbc_lblLucro.gridy = 2;
+		add(lblLucro, gbc_lblLucro);
 		
 		txtMargemLucro = new JTextField();
 		GridBagConstraints gbc_txtMargemLucro = new GridBagConstraints();
@@ -136,13 +136,13 @@ public class MioloProduto extends JPanel {
 		add(txtDescricao, gbc_txtDescricao);
 		txtDescricao.setColumns(10);
 		
-		JLabel lblMargemLucro = new JLabel("LUCRO");
-		GridBagConstraints gbc_lblMargemLucro = new GridBagConstraints();
-		gbc_lblMargemLucro.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMargemLucro.anchor = GridBagConstraints.EAST;
-		gbc_lblMargemLucro.gridx = 3;
-		gbc_lblMargemLucro.gridy = 3;
-		add(lblMargemLucro, gbc_lblMargemLucro);
+		JLabel lblCusto = new JLabel("CUSTO");
+		GridBagConstraints gbc_lblCusto = new GridBagConstraints();
+		gbc_lblCusto.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCusto.anchor = GridBagConstraints.EAST;
+		gbc_lblCusto.gridx = 3;
+		gbc_lblCusto.gridy = 3;
+		add(lblCusto, gbc_lblCusto);
 		
 		txtPreco = new JTextField();
 		GridBagConstraints gbc_txtPreco = new GridBagConstraints();

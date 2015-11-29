@@ -173,7 +173,7 @@ public class MioloUsuario extends JPanel {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						txtSENHA.setText("");	
+						txtSENHA.setText("");
 					}
 					
 				} else {
@@ -291,6 +291,11 @@ public class MioloUsuario extends JPanel {
 	
 	protected void acao_listar() throws SQLException {
 		modelo.setList(userDAO.listar());
+		
+		btnCriarNovo.setText("SALVAR O NOVO USUÁRIO");
+		btnAtualizarRegistroSelecionado.setVisible(false);
+		cbUsuarios.setVisible(true);
+		lblUsurio.setVisible(true);
 	}
 	
 	private void acao_atualizar(int id, int id_usuario, String senha) throws SQLException, NoSuchAlgorithmException {
