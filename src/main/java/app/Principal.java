@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -15,6 +16,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 public class Principal extends JFrame {
 
@@ -26,6 +28,7 @@ public class Principal extends JFrame {
 	//variaveis privadas
 	static JPanel contentPane;
 	static JTabbedPane tabbedPane;
+	private BlockPanel glass;
 	
 	/**
 	 * Launch the application.
@@ -47,8 +50,12 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		setForeground(Color.WHITE);
+		
+		blockParaLogin();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 710, 500);
+		setBounds(100, 100, 912, 684);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -112,6 +119,7 @@ public class Principal extends JFrame {
 		mnarquivo.add(mntmSair);
 		
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -195,5 +203,39 @@ public class Principal extends JFrame {
 		}
 		
 		
-	
+		protected void block() {
+			setGlassPane(glass);
+			glass.setVisible(true);
+			
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					for (int i =0; i < 5; i++) {
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					glass.setVisible(false);
+				}
+			}).start();
+		}
+
+		private void blockParaLogin() {
+			Runnable acaoOk = () -> {
+				glass.setVisible(false);
+				glass = new BlockPanel();
+			};
+
+			//---- USAR O PAINEL DE LOGIN.
+			PainelLogin painelLogin = new PainelLogin(acaoOk);
+			glass = new BlockPanel(painelLogin);
+			//-----------------------------------
+
+			setGlassPane(glass);
+
+			glass.setVisible(true);
+		}
 }

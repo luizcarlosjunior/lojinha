@@ -1,5 +1,8 @@
 package DAO;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,7 +85,7 @@ public class UsuarioDaoImplements implements UsuarioDao {
 	public Usuario buscar(int user_id) throws SQLException {
 		abrirConexao();
 		Statement st = conn.createStatement();
-		ResultSet result = st.executeQuery("SELECT * FROM USUARIOS WHERE CLIENTE_ID = " + user_id + " LIMIT = 1");
+		ResultSet result = st.executeQuery("SELECT * FROM USUARIOS WHERE CLIENTE_ID = " + user_id + " LIMIT 1");
 		
 		Usuario u = new Usuario();
 		
@@ -95,7 +98,36 @@ public class UsuarioDaoImplements implements UsuarioDao {
 		fecharConexao();
 		return u;
 	}
+
+	@Override
+	public boolean login(int usuario_id, String senha) throws SQLException {
+		boolean retorno = false;
+		String senha_md5 = "";
+		
+		try {
+			senha_md5 = senha_md5(senha);
+			System.out.println(senha_md5);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		abrirConexao();
+		Statement st = conn.createStatement();
+		ResultSet result = st.executeQuery("SELECT CLIENTE_ID FROM USUARIOS WHERE CLIENTE_ID = " + usuario_id + " AND SENHA = '" + senha_md5 + "' LIMIT 1");
+		// se tiver um retorno...
+		if (result.next()){
+			retorno = true;
+		}
+		
+		return retorno;
+	}
 	
-	
+	protected String senha_md5(String senha) throws NoSuchAlgorithmException {
+		// md5 para a senha
+		MessageDigest m=MessageDigest.getInstance("MD5");
+		m.update(senha.getBytes(),0,senha.length());
+		return new BigInteger(1,m.digest()).toString(16);
+	}
 	
 }

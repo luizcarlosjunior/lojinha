@@ -8,26 +8,20 @@ import javax.swing.JButton;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-import javax.swing.ComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 import ATM.ComboBoxModelClientes;
-import ATM.ModeloCliente;
 import ATM.ModeloUsuario;
 import DAO.UsuarioDaoImplements;
-import MODEL.Cliente;
 import MODEL.Usuario;
 
 import javax.swing.JScrollPane;
