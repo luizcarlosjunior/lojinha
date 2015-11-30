@@ -199,29 +199,10 @@ public class Principal extends JFrame {
 			
 			Pedido.setCloseAction(action);
 	
-			tabbedPane.addTab("Produtos", Pedido);
+			tabbedPane.addTab("Pedidos", Pedido);
 		}
 		
 		
-		protected void block() {
-			setGlassPane(glass);
-			glass.setVisible(true);
-			
-			new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					for (int i =0; i < 5; i++) {
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					glass.setVisible(false);
-				}
-			}).start();
-		}
 
 		private void blockParaLogin() {
 			Runnable acaoOk = () -> {
@@ -238,4 +219,5 @@ public class Principal extends JFrame {
 
 			glass.setVisible(true);
 		}
+		
 }

@@ -1,6 +1,7 @@
 package app;
 
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 
 import java.awt.GridBagLayout;
 
@@ -42,17 +43,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
 
-public class MioloPedido extends JPanel {
+public class MioloPedido extends JRootPane {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+
 	
 	//conexão
 	private PedidoDaoImplements pedidoDAO = new PedidoDaoImplements();
@@ -66,6 +71,11 @@ public class MioloPedido extends JPanel {
 	JButton btnEditarPedido = new JButton("EDITAR PEDIDO SELECIONADO");
 	
 	private ComboBoxModelClientes comboBoxModelClientes = new ComboBoxModelClientes();
+	
+	
+
+	private BlockPanel glass;
+	
 	
 	/**
 	 * Create the panel.
@@ -167,6 +177,8 @@ public class MioloPedido extends JPanel {
 		
 		btnEditarPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+			
 				
 				try {
 					acao_editar();
@@ -292,17 +304,13 @@ public class MioloPedido extends JPanel {
 	protected void acao_editar() throws SQLException {
 		// pega o id do pedido
 		int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);  
-		
-		Pedido p = pedidoDAO.buscar(id);
-		
-		//mostrar a tela de editar deste pedido...
-		
-		
-		
-		//atualiza a lista
+		// abre a janela de edição do pedido selecionado...
+		JdPedidoEditar janela = new JdPedidoEditar(id);
+        janela.setLocationRelativeTo(this);
+        janela.setVisible(true);
+		// pausa até que a janela seja fechada...
 		acao_listar();
 	}
-	
-	
+		
 	
 }
