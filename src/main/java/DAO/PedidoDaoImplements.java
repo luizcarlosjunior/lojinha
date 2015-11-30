@@ -187,5 +187,17 @@ public class PedidoDaoImplements implements PedidoDao {
 		return lista;
 	}
 
+	public void atualizar_valores(int id) throws SQLException {
+		abrirConexao();
+		PreparedStatement ps = conn.prepareStatement("UPDATE PEDIDOS SET valor_total = (SELECT SUM(valor) FROM ITENS WHERE pedido_id = ?), valor_desconto = (SELECT SUM(desconto) FROM ITENS WHERE pedido_id = ?), valor_liquido = ((SELECT SUM(valor_liquido) FROM ITENS WHERE pedido_id = ?)) where id = ?");
+		ps.setInt(1, id);
+		ps.setInt(2, id);
+		ps.setInt(3, id);
+		ps.setInt(4, id);
+		ps.executeUpdate();
+		ps.close();
+		fecharConexao();
+	}
+
 	
 }

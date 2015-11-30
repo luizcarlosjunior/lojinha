@@ -7,28 +7,48 @@
 
 package MODEL;
 
-import java.math.BigDecimal;
-
 import ENUM.EnumUnidade;
 
 public class Item {
 	int id;
-	BigDecimal desconto;
-	BigDecimal valor_liquido;
+	Float desconto;
+	Float valor_liquido;
+	int pedido_id;
 	int quantidade;
 	
 	//dados do produto
-	int id_produto;
+	int produto_id;
 	String codigo_de_barras;
 	String descricao;
 	EnumUnidade unidade;
-	BigDecimal custo;
-	BigDecimal margem_de_lucro;
+	Float custo;
+	Float margem_de_lucro;
+	Float valor;
 	
 	//dados da categoria
 	Categoria categoria_id;
 	String categoria_nome;
 	
+	
+	public int getPedido_id() {
+		return pedido_id;
+	}
+	public void setPedido_id(int pedido_id) {
+		this.pedido_id = pedido_id;
+	}
+	public int getProduto_id() {
+		return produto_id;
+	}
+	public void setProduto_id(int produto_id) {
+		this.produto_id = produto_id;
+	}
+	public Float getValor() {
+		return valor;
+	}
+	public void setValor(Float valor) {
+		this.valor = valor;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -43,23 +63,23 @@ public class Item {
 		this.quantidade = quantidade;
 	}
 	
-	public BigDecimal getDesconto() {
+	public Float getDesconto() {
 		return desconto;
 	}
-	public void setDesconto(BigDecimal desconto) {
+	public void setDesconto(Float desconto) {
 		this.desconto = desconto;
 	}
-	public BigDecimal getValor_liquido() {
+	public Float getValor_liquido() {
 		return valor_liquido;
 	}
-	public void setValor_liquido(BigDecimal valor_liquido) {
+	public void setValor_liquido(Float valor_liquido) {
 		this.valor_liquido = valor_liquido;
 	}
 	public int getId_produto() {
-		return id_produto;
+		return produto_id;
 	}
-	public void setId_produto(int id_produto) {
-		this.id_produto = id_produto;
+	public void setId_produto(int produto_id) {
+		this.produto_id = produto_id;
 	}
 	public String getCodigo_de_barras() {
 		return codigo_de_barras;
@@ -79,16 +99,16 @@ public class Item {
 	public void setUnidade(EnumUnidade unidade) {
 		this.unidade = unidade;
 	}
-	public BigDecimal getCusto() {
+	public Float getCusto() {
 		return custo;
 	}
-	public void setCusto(BigDecimal custo) {
+	public void setCusto(Float custo) {
 		this.custo = custo;
 	}
-	public BigDecimal getMargem_de_lucro() {
+	public Float getMargem_de_lucro() {
 		return margem_de_lucro;
 	}
-	public void setMargem_de_lucro(BigDecimal margem_de_lucro) {
+	public void setMargem_de_lucro(Float margem_de_lucro) {
 		this.margem_de_lucro = margem_de_lucro;
 	}
 	public Categoria getCategoria_id() {
