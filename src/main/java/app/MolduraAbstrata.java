@@ -43,21 +43,7 @@ public abstract class MolduraAbstrata extends JPanel {
 		panel.setLayout(gbl_panel);
 		
 		btnFechar = new JButton("Fechar");
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				Component selected = Principal.tabbedPane.getSelectedComponent();
-		        if (selected != null) {
-
-		        	Principal.tabbedPane.remove(selected);
-		            // It would probably be worthwhile getting the source
-		            // casting it back to a JButton and removing
-		            // the action handler reference ;)
-
-		        }
-				
-			}
-		});
+		
 		GridBagConstraints gbc_btnFechar = new GridBagConstraints();
 		gbc_btnFechar.anchor = GridBagConstraints.EAST;
 		gbc_btnFechar.gridx = 1;
