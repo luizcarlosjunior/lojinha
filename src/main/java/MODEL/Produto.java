@@ -81,5 +81,8 @@ public class Produto {
 		return valido;
 	}
 	
+	public Float getValor() {
+		return (this.custo + this.margem_de_lucro);
+	}
 	
 }

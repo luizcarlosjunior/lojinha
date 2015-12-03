@@ -71,6 +71,12 @@ public class MioloProduto extends JPanel {
 	    // esconde o botao de atualizar
 	    btnAtualizarRegistroSelecionado.setVisible(false);
 		
+		cbCategorias.setModel(comboBoxModelClientes);
+		
+		// para evitar dar erros
+		cbCategorias.setSelectedIndex(1);
+	    
+	    
 		//ja atualiza a janela de cara...
 		atualiza_visao();
 		
@@ -178,12 +184,7 @@ public class MioloProduto extends JPanel {
 		gbc_lblCategoria.gridy = 4;
 		add(lblCategoria, gbc_lblCategoria);
 		
-		cbCategorias.setModel(comboBoxModelClientes);
-		
-		// para evitar dar erros
-		cbCategorias.setSelectedIndex(1);
-		
-		
+
 		GridBagConstraints gbc_cbCategorias = new GridBagConstraints();
 		gbc_cbCategorias.insets = new Insets(0, 0, 5, 5);
 		gbc_cbCategorias.fill = GridBagConstraints.HORIZONTAL;

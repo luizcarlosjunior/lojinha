@@ -7,26 +7,22 @@
 
 package MODEL;
 
-import ENUM.EnumUnidade;
-
 public class Item {
 	int id;
-	Float desconto;
-	Float valor_liquido;
 	int pedido_id;
 	int quantidade;
-	
-	//dados do produto
 	int produto_id;
+	//dados do produto
 	String codigo_de_barras;
 	String descricao;
-	EnumUnidade unidade;
+	String unidade;
 	Float custo;
 	Float margem_de_lucro;
 	Float valor;
-	
+	Float desconto;
+	Float valor_liquido;
 	//dados da categoria
-	Categoria categoria_id;
+	int categoria_id;
 	String categoria_nome;
 	
 	
@@ -93,10 +89,10 @@ public class Item {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public EnumUnidade getUnidade() {
+	public String getUnidade() {
 		return unidade;
 	}
-	public void setUnidade(EnumUnidade unidade) {
+	public void setUnidade(String unidade) {
 		this.unidade = unidade;
 	}
 	public Float getCusto() {
@@ -111,10 +107,10 @@ public class Item {
 	public void setMargem_de_lucro(Float margem_de_lucro) {
 		this.margem_de_lucro = margem_de_lucro;
 	}
-	public Categoria getCategoria_id() {
+	public int getCategoria_id() {
 		return categoria_id;
 	}
-	public void setCategoria_id(Categoria categoria_id) {
+	public void setCategoria_id(int categoria_id) {
 		this.categoria_id = categoria_id;
 	}
 	public String getCategoria_nome() {
