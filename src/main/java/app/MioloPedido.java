@@ -179,6 +179,7 @@ public class MioloPedido extends JRootPane {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					acao_editar();
+					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -282,14 +283,6 @@ public class MioloPedido extends JRootPane {
 		btnEditarPedido.setVisible(false);
 	}
 	
-	private void acao_atualizar(int id, int id_usuario, String senha) throws SQLException, NoSuchAlgorithmException {
-		// criar modelo temoprario
-		Pedido p = new Pedido();
-		//enviar para o DAO
-		pedidoDAO.atualizar(p);
-		//atualiza a lista
-		acao_listar();
-	}
 	
 	protected void acao_apagar(int id) throws SQLException {
 		pedidoDAO.excluir(id);
@@ -305,6 +298,10 @@ public class MioloPedido extends JRootPane {
 		JdPedidoEditar janela = new JdPedidoEditar(id);
         janela.setLocationRelativeTo(this);
         janela.setVisible(true);
+        
+        //atualiza o banco
+        pedidoDAO.atualizar_valores(id);
+        
 		// pausa até que a janela seja fechada...
 		acao_listar();
 	}

@@ -15,7 +15,7 @@ public class ModeloItem extends AbstractTableModel {
 	private ArrayList<Item> lista = new ArrayList<Item>();
 	
 	public int getColumnCount() {
-		return 6;
+		return 7;
 	}
 
 	public int getRowCount() {
@@ -38,11 +38,11 @@ public class ModeloItem extends AbstractTableModel {
 		case 2:
 			return i.getUnidade();
 		case 3:
-			return i.getQuantidade();
-		case 4:
 			return i.getValor();
-		case 5:
+		case 4:
 			return i.getDesconto();
+		case 5:
+			return i.getQuantidade();
 		case 6:
 			return i.getValor_liquido();
 		default:
@@ -66,13 +66,13 @@ public class ModeloItem extends AbstractTableModel {
 		case 2:
 			return "Unidade";
 		case 3:
-			return "Quantidade";
-		case 4:
 			return "Valor Unitário";
-		case 5:
+		case 4:
 			return "Valor de Desconto";
+		case 5:
+			return "Quantidade";
 		case 6:
-			return "Valor Líquido";
+			return "Valor Total";
 		default:
 			return "Erro";
 		}

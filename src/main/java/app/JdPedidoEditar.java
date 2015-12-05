@@ -27,6 +27,7 @@ import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
 import java.awt.Insets;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
@@ -92,6 +93,15 @@ public class JdPedidoEditar extends JDialog {
 		cbProduto.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
+				try {
+					atualizar_valores();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void focusGained(FocusEvent arg0) {
 				try {
 					atualizar_valores();
 				} catch (SQLException e) {
@@ -262,6 +272,37 @@ public class JdPedidoEditar extends JDialog {
 		}
 		{
 			JButton btnRemoverDoPedido = new JButton("REMOVER DO PEDIDO");
+			btnRemoverDoPedido.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					try {
+						int id = (Integer) modelo.getValueAt(table.getSelectedRow(),0);
+
+						//pergunta se quer realmente apagar
+						int confirmacao = JOptionPane.showConfirmDialog (null, "Quer realmente apagar o registro?","Confirmação", JOptionPane.YES_OPTION);
+						
+			            if(confirmacao == 0){
+			            	
+			            	// tenta apagar
+							try {
+								acao_apagar(id);
+								
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+					
+			            }
+					
+						
+			        } catch (Exception e_apaga) {
+			        	JOptionPane.showMessageDialog(null, "Você precisa selecionar um elemento.");
+			        }	
+					//atualiza a lista
+					
+				
+				}
+			});
 			GridBagConstraints gbc_btnRemoverDoPedido = new GridBagConstraints();
 			gbc_btnRemoverDoPedido.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnRemoverDoPedido.insets = new Insets(0, 0, 5, 0);
