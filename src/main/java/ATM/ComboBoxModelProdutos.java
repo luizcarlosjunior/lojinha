@@ -1,6 +1,7 @@
 package ATM;
 
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
@@ -51,7 +52,7 @@ public class ComboBoxModelProdutos extends AbstractListModel implements ComboBox
     	String result = "erro";
 		try {
 			Produto p = lista().get(index);
-			result = p.getId() + " - " + p.getDescricao().trim() + " (R$ " + (p.getValor()) + ")";
+			result = p.getId() + " - " + p.getDescricao().trim() + " ("	+ p.getValorFormatado() + ")";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

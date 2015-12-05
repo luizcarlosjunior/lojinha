@@ -33,8 +33,8 @@ public class ItemDaoImplements implements ItemDao {
 		//abrir a conexao
 		abrirConexao();
 		
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO ITENS (pedido_id, quantidade, produto_id,ccodigo_de_barras, descricao, unidade, custo, "
-				+ "margem_de_lucro, valor, desconto,  valor_liquido, categoria_id, categoria_nome) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO ITENS (pedido_id, quantidade, produto_id, codigo_de_barras, descricao, unidade, custo, "
+				+ "margem_de_lucro, valor, desconto,  valor_liquido, categoria) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 
 		ps.setInt(1, i.getPedido_id());
 		ps.setInt(2, i.getQuantidade());
@@ -47,8 +47,7 @@ public class ItemDaoImplements implements ItemDao {
 		ps.setFloat(9, i.getValor());
 		ps.setFloat(10, i.getDesconto());
 		ps.setFloat(11, i.getValor_liquido());
-		ps.setInt(12, i.getCategoria_id());
-		ps.setString(13, i.getCategoria_nome().trim());
+		ps.setString(12, i.getcategoria().trim());
 		
 		ps.executeUpdate();
 		
@@ -59,7 +58,7 @@ public class ItemDaoImplements implements ItemDao {
 
 	public void atualizar(Item i) throws SQLException {
 		abrirConexao();
-		PreparedStatement ps = conn.prepareStatement("UPDATE ITENS SET pedido_id = ?, quantidade = ?, produto_id = ?, codigo_de_barras = ?, descricao = ?, unidade = ?, custo = ?, margem_de_lucro = ?, valor = ?, desconto = ?, valor_liquido = ?, categoria_id = ?, categoria_nome = ? WHERE ID = ?");
+		PreparedStatement ps = conn.prepareStatement("UPDATE ITENS SET pedido_id = ?, quantidade = ?, produto_id = ?, codigo_de_barras = ?, descricao = ?, unidade = ?, custo = ?, margem_de_lucro = ?, valor = ?, desconto = ?, valor_liquido = ?, categoria = ? WHERE ID = ?");
 
 		ps.setInt(1, i.getPedido_id());
 		ps.setInt(2, i.getQuantidade());
@@ -72,9 +71,8 @@ public class ItemDaoImplements implements ItemDao {
 		ps.setFloat(9, i.getValor());
 		ps.setFloat(10, i.getDesconto());
 		ps.setFloat(11, i.getValor_liquido());
-		ps.setInt(12, i.getCategoria_id());
-		ps.setString(13, i.getCategoria_nome().trim());
-		ps.setInt(14, i.getId());
+		ps.setString(12, i.getcategoria().trim());
+		ps.setInt(13, i.getId());
 		
 		ps.executeUpdate();
 		ps.close();
@@ -126,19 +124,18 @@ public class ItemDaoImplements implements ItemDao {
 			Item i = new Item();
 			//adiciona os dados coletados
 			i.setId(result.getInt(1));
-			i.setPedido_id(result.getInt(2));
-			i.setQuantidade(result.getInt(3));
-			i.setId_produto(result.getInt(4));
-			i.setCodigo_de_barras(result.getString(5));
-			i.setDescricao(result.getString(6));
-			i.setUnidade( result.getString(7));
-			i.setCusto(result.getFloat(8));
-			i.setMargem_de_lucro(result.getFloat(9));
-			i.setValor(result.getFloat(10));
-			i.setDesconto(result.getFloat(11));
-			i.setValor_liquido(result.getFloat(12));
-			i.setCategoria_id(result.getInt(13));
-			i.setCategoria_nome(result.getString(14));
+			i.setDesconto(result.getFloat(2));
+			i.setValor_liquido(result.getFloat(3));
+			i.setPedido_id(result.getInt(4));
+			i.setQuantidade(result.getInt(5));
+			i.setId_produto(result.getInt(6));
+			i.setCodigo_de_barras(result.getString(7));
+			i.setDescricao(result.getString(8));
+			i.setUnidade( result.getString(9));
+			i.setCusto(result.getFloat(10));
+			i.setMargem_de_lucro(result.getFloat(11));
+			i.setValor(result.getFloat(12));
+			i.setcategoria(result.getString(13));
 		
 			//adiciona na lista
 			lista.add(i);
@@ -171,8 +168,7 @@ public class ItemDaoImplements implements ItemDao {
 			i.setValor(result.getFloat(10));
 			i.setDesconto(result.getFloat(11));
 			i.setValor_liquido(result.getFloat(12));
-			i.setCategoria_id(result.getInt(13));
-			i.setCategoria_nome(result.getString(14));
+			i.setcategoria(result.getString(13));
 		}
 		
 		fecharConexao();

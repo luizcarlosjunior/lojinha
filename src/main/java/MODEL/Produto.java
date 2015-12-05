@@ -7,6 +7,11 @@
 
 package MODEL;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class Produto {
 	int id;
 	String codigo_de_barras;
@@ -81,8 +86,21 @@ public class Produto {
 		return valido;
 	}
 	
-	public Float getValor() {
-		return (this.custo + this.margem_de_lucro);
+	public float getValor() {
+
+        float valor = this.custo + this.margem_de_lucro;
+        
+        int casasDecimais = 2;
+        BigDecimal aNumber = new BigDecimal(valor);
+        aNumber = aNumber.setScale(casasDecimais, BigDecimal.ROUND_HALF_UP);
+        double value = aNumber.doubleValue();
+        
+		return (float) value;
 	}
+	
+	public String getValorFormatado(){
+		return NumberFormat.getCurrencyInstance().format( getValor() );
+	}
+	
 	
 }

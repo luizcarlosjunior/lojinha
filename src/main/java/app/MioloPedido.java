@@ -177,9 +177,6 @@ public class MioloPedido extends JRootPane {
 		
 		btnEditarPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			
-				
 				try {
 					acao_editar();
 				} catch (SQLException e1) {

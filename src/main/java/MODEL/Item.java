@@ -22,8 +22,26 @@ public class Item {
 	Float desconto;
 	Float valor_liquido;
 	//dados da categoria
-	int categoria_id;
-	String categoria_nome;
+	String categoria;
+	
+	
+	public Item(){}
+	
+	public Item(int id, int pedido_id, int quantidade, int produto_id, String codigo_de_barras, String descricao, String unidade, Float custo, Float margem_de_lucro, Float valor, Float desconto, Float valor_liquido, String categoria) {
+		this.id = id;
+		this.pedido_id = pedido_id;
+		this.quantidade = quantidade;
+		this.produto_id = produto_id;
+		this.codigo_de_barras = codigo_de_barras;
+		this.descricao = descricao;
+		this.unidade = unidade;
+		this.custo = custo;
+		this.margem_de_lucro = margem_de_lucro;
+		this.valor = valor;
+		this.desconto = desconto;
+		this.valor_liquido = valor_liquido;
+		this.categoria = categoria;
+	}
 	
 	
 	public int getPedido_id() {
@@ -107,17 +125,11 @@ public class Item {
 	public void setMargem_de_lucro(Float margem_de_lucro) {
 		this.margem_de_lucro = margem_de_lucro;
 	}
-	public int getCategoria_id() {
-		return categoria_id;
+	public String getcategoria() {
+		return categoria;
 	}
-	public void setCategoria_id(int categoria_id) {
-		this.categoria_id = categoria_id;
-	}
-	public String getCategoria_nome() {
-		return categoria_nome;
-	}
-	public void setCategoria_nome(String categoria_nome) {
-		this.categoria_nome = categoria_nome;
+	public void setcategoria(String categoria) {
+		this.categoria = categoria;
 	}
 	
 }

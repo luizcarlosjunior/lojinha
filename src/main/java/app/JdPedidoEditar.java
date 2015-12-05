@@ -13,6 +13,7 @@ import ATM.ComboBoxModelProdutos;
 import ATM.ModeloItem;
 import DAO.ItemDaoImplements;
 import DAO.PedidoDaoImplements;
+import DAO.ProdutoDaoImplements;
 import MODEL.Item;
 import MODEL.Produto;
 
@@ -34,6 +35,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.math.BigDecimal;
 
 public class JdPedidoEditar extends JDialog {
 	
@@ -43,7 +45,7 @@ public class JdPedidoEditar extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
 
-	int id;
+	int pedido_id;
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -53,10 +55,11 @@ public class JdPedidoEditar extends JDialog {
 	JComboBox cbProduto = new JComboBox();
 	
 	private ComboBoxModelProdutos comboBoxModelProdutos = new ComboBoxModelProdutos();
-	JSpinner txtQuntidade = new JSpinner();
+	JSpinner txtQuantidade = new JSpinner();
 	
 	//conexão
 	private PedidoDaoImplements pedidoDAO = new PedidoDaoImplements();
+	private ProdutoDaoImplements prodDAO = new ProdutoDaoImplements();
 	private ItemDaoImplements itemDAO = new ItemDaoImplements();
 	
 	//modelo
@@ -81,11 +84,11 @@ public class JdPedidoEditar extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public JdPedidoEditar(int id) {
+	public JdPedidoEditar(int pedido_id) {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setAlwaysOnTop(true);
 		
-		this.id = id;
+		this.pedido_id = pedido_id;
 		cbProduto.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -106,14 +109,14 @@ public class JdPedidoEditar extends JDialog {
 		//ja atualiza a janela de cara...
 		atualiza_visao();
 		
-		
+
 		
 		setBounds(100, 100, 674, 504);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 83, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.columnWidths = new int[]{0, 83, 0, 0, 0, 96, 0, 0};
 		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
@@ -139,6 +142,38 @@ public class JdPedidoEditar extends JDialog {
 		}
 		{
 			JButton btnNewButton = new JButton("ADICIONAR AO PEDIDO");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					try {
+						Produto p = prodDAO.buscar(comboBoxModelProdutos.getSelectedItemID(cbProduto.getSelectedIndex()));
+						
+						int quantidade = (int) txtQuantidade.getValue();
+						int produto_id = p.getId();
+						String codigo_de_barras = p.getCodigo_de_barras();
+						String descricao = p.getDescricao();
+						String unidade = p.getUnidade();
+						Float custo = p.getCusto();
+						Float margem_de_lucro = p.getMargem_de_lucro();
+						Float valor = p.getValor();
+						Float desconto = valor_desconto_unidade();
+						Float valor_liquido = valor_total();
+						String categoria = p.getCategoria();
+						
+						Item i = new Item(0, pedido_id, quantidade, produto_id, codigo_de_barras, descricao, unidade, custo, margem_de_lucro, valor, desconto, valor_liquido, categoria);
+						//insere
+						itemDAO.inserir(i);
+					
+						// atualizar a lista
+						acao_listar();
+					
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}					
+					
+				}
+			});
 			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 			gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnNewButton.anchor = GridBagConstraints.ABOVE_BASELINE;
@@ -157,12 +192,12 @@ public class JdPedidoEditar extends JDialog {
 		}
 		{
 			
-			GridBagConstraints gbc_txtQuntidade = new GridBagConstraints();
-			gbc_txtQuntidade.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtQuntidade.insets = new Insets(0, 0, 5, 5);
-			gbc_txtQuntidade.gridx = 1;
-			gbc_txtQuntidade.gridy = 1;
-			txtQuntidade.addChangeListener(new ChangeListener() {
+			GridBagConstraints gbc_txtQuantidade = new GridBagConstraints();
+			gbc_txtQuantidade.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtQuantidade.insets = new Insets(0, 0, 5, 5);
+			gbc_txtQuantidade.gridx = 1;
+			gbc_txtQuantidade.gridy = 1;
+			txtQuantidade.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent arg0) {
 					try {
 						atualizar_valores();
@@ -172,8 +207,8 @@ public class JdPedidoEditar extends JDialog {
 					}
 				}
 			});
-			txtQuntidade.setModel(new SpinnerNumberModel(1, 1, 999, 1));
-			contentPanel.add(txtQuntidade, gbc_txtQuntidade);
+			txtQuantidade.setModel(new SpinnerNumberModel(1, 1, 999, 1));
+			contentPanel.add(txtQuantidade, gbc_txtQuantidade);
 		}
 		{
 			JLabel lblDesconto = new JLabel("DESCONTO (%):");
@@ -262,6 +297,20 @@ public class JdPedidoEditar extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+		
+		
+
+		//seta o modelo na tabela
+		table.setModel(modelo);
+		
+		try {
+			acao_listar();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
@@ -277,7 +326,7 @@ public class JdPedidoEditar extends JDialog {
 	}
 	
 	private void acao_listar() throws SQLException {
-		modelo.setList(itemDAO.listar());
+		modelo.setList(itemDAO.listar_pedido(pedido_id));
 	}
 	
 	private void acao_apagar(int id) throws SQLException {
@@ -300,22 +349,52 @@ public class JdPedidoEditar extends JDialog {
 	
 
 	public void limpar_campos(){
-		txtQuntidade.setValue(1);
+		txtQuantidade.setValue(1);
+		txtDesconto.setValue(0);
 		cbProduto.setSelectedIndex(0);
 	}	
 	
 	public void atualizar_valores() throws SQLException{
+		//coloca o resultado no valor total...
+		txtTOTAL.setText("R$ " + String.valueOf(valor_total()));
+	}
+	
+	public float valor_desconto_unidade() throws SQLException{
 		//coleta o valor do produto
 		float valor = comboBoxModelProdutos.getSelectedItemValor(cbProduto.getSelectedIndex());
-		//oleta a quantidade
-		int qtd = (int) txtQuntidade.getValue();
+		//coleta o valor do desconto em %
+		int desconto = (int) txtDesconto.getValue();
+		// faz a continha de padaria
+		float total = ((valor) * (desconto))/100;
+		
+        // manter em 2 casas decimais
+        int casasDecimais = 2;
+        BigDecimal aNumber = new BigDecimal(total);
+        aNumber = aNumber.setScale(casasDecimais, BigDecimal.ROUND_HALF_UP);
+        double value = aNumber.doubleValue();
+        
+        return (float) value;
+	}
+	
+	public float valor_total() throws SQLException{
+		//coleta o valor do produto
+		float valor = comboBoxModelProdutos.getSelectedItemValor(cbProduto.getSelectedIndex());
+		//coleta a quantidade
+		int qtd = (int) txtQuantidade.getValue();
 		//coleta o valor do desconto em %
 		int desconto = (int) txtDesconto.getValue();
 		// faz a continha de padaria
 		float total = (valor * qtd) - ((valor * qtd) * (desconto))/100;
-		//coloca o resultado no valor total...
-		txtTOTAL.setText("R$ " + String.valueOf(total));
-	}	
+		
+		
+        // manter em 2 casas decimais
+        int casasDecimais = 2;
+        BigDecimal aNumber = new BigDecimal(total);
+        aNumber = aNumber.setScale(casasDecimais, BigDecimal.ROUND_HALF_UP);
+        double value = aNumber.doubleValue();
+        
+        return (float) value;
+	}
 	
 
 }
